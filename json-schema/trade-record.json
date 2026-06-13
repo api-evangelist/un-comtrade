@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/un-comtrade/main/json-schema/trade-record.json",
+  "title": "UN Comtrade Trade Record",
+  "description": "A single international merchandise or services trade data record from the UN Comtrade database.",
+  "type": "object",
+  "properties": {
+    "typeCode": {
+      "type": "string",
+      "enum": ["C", "S"],
+      "description": "Trade type: C=Commodities/Goods, S=Services"
+    },
+    "freqCode": {
+      "type": "string",
+      "enum": ["A", "M"],
+      "description": "Reporting frequency: A=Annual, M=Monthly"
+    },
+    "refPeriodId": {
+      "type": "integer",
+      "description": "Reference period as integer (YYYY or YYYYMM)"
+    },
+    "refYear": {
+      "type": "integer",
+      "minimum": 1962,
+      "description": "Reference year"
+    },
+    "refMonth": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 99,
+      "description": "Reference month (1–12), or 99 for annual data"
+    },
+    "period": {
+      "type": "string",
+      "pattern": "^(\\d{4}|\\d{6})$",
+      "description": "Period string: YYYY for annual or YYYYMM for monthly"
+    },
+    "reporterCode": {
+      "type": "integer",
+      "description": "UN M49 numeric code for the reporting country/territory"
+    },
+    "reporterISO": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 3166-1 alpha-3 code for the reporting country"
+    },
+    "reporterDesc": {
+      "type": "string",
+      "description": "Name of the reporting country/territory"
+    },
+    "flowCode": {
+      "type": "string",
+      "enum": ["M", "X", "MIP", "XIP", "MOP", "XOP", "RM", "RX"],
+      "description": "Trade flow: M=Import, X=Export, MIP=Import in-transit, XIP=Export in-transit, MOP=Import for outward processing, XOP=Export for outward processing, RM=Re-import, RX=Re-export"
+    },
+    "flowDesc": {
+      "type": "string",
+      "description": "Human-readable trade flow description"
+    },
+    "partnerCode": {
+      "type": "integer",
+      "description": "UN M49 numeric code for the partner country (0=World)"
+    },
+    "partnerISO": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-3 code for the partner country"
+    },
+    "partnerDesc": {
+      "type": "string",
+      "description": "Name of the partner country"
+    },
+    "partner2Code": {
+      "type": ["integer", "null"],
+      "description": "Secondary partner UN M49 code (for triangular trade)"
+    },
+    "partner2ISO": {
+      "type": ["string", "null"],
+      "description": "Secondary partner ISO alpha-3 code"
+    },
+    "partner2Desc": {
+      "type": ["string", "null"],
+      "description": "Secondary partner name"
+    },
+    "classificationCode": {
+      "type": "string",
+      "enum": ["HS", "H5", "H4", "H3", "H2", "H1", "H0", "S4", "S3", "S2", "S1", "S0", "B4", "B3", "EB02"],
+      "description": "Commodity classification system and revision"
+    },
+    "classificationSearchCode": {
+      "type": "string",
+      "description": "Classification code used for querying"
+    },
+    "isOriginalClassification": {
+      "type": "boolean",
+      "description": "Whether this is the original reported classification"
+    },
+    "cmdCode": {
+      "type": "string",
+      "description": "Commodity code (e.g., HS 6-digit code)"
+    },
+    "cmdDesc": {
+      "type": "string",
+      "description": "Commodity description"
+    },
+    "aggrLevel": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5, 6],
+      "description": "Commodity aggregation level (2=chapter, 4=heading, 6=subheading for HS)"
+    },
+    "isLeaf": {
+      "type": "boolean",
+      "description": "Whether this is a leaf-level (most granular) commodity code"
+    },
+    "customsCode": {
+      "type": ["string", "null"],
+      "description": "Customs procedure code"
+    },
+    "customsDesc": {
+      "type": ["string", "null"],
+      "description": "Customs procedure description"
+    },
+    "mosCode": {
+      "type": ["string", "null"],
+      "description": "Mode of supply code (for services trade)"
+    },
+    "motCode": {
+      "type": ["integer", "null"],
+      "description": "Mode of transport code"
+    },
+    "motDesc": {
+      "type": ["string", "null"],
+      "description": "Mode of transport description"
+    },
+    "qtyUnitCode": {
+      "type": ["integer", "null"],
+      "description": "Quantity unit code"
+    },
+    "qtyUnitAbbr": {
+      "type": ["string", "null"],
+      "description": "Quantity unit abbreviation (e.g., kg, m2, u)"
+    },
+    "qty": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Quantity traded in the specified unit"
+    },
+    "isQtyEstimated": {
+      "type": "boolean",
+      "description": "Whether the quantity value is estimated rather than reported"
+    },
+    "altQtyUnitCode": {
+      "type": ["integer", "null"],
+      "description": "Alternative quantity unit code"
+    },
+    "altQtyUnitAbbr": {
+      "type": ["string", "null"],
+      "description": "Alternative quantity unit abbreviation"
+    },
+    "altQty": {
+      "type": ["number", "null"],
+      "description": "Alternative quantity"
+    },
+    "isAltQtyEstimated": {
+      "type": "boolean",
+      "description": "Whether the alternative quantity is estimated"
+    },
+    "netWgt": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Net weight in kilograms"
+    },
+    "isNetWgtEstimated": {
+      "type": "boolean",
+      "description": "Whether net weight is estimated"
+    },
+    "grossWgt": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Gross weight in kilograms"
+    },
+    "isGrossWgtEstimated": {
+      "type": "boolean",
+      "description": "Whether gross weight is estimated"
+    },
+    "cifvalue": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "CIF (Cost, Insurance, Freight) value in USD — used for imports"
+    },
+    "fobvalue": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "FOB (Free On Board) value in USD — used for exports"
+    },
+    "primaryValue": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Primary trade value in USD (CIF for imports, FOB for exports)"
+    },
+    "legacyEstimationFlag": {
+      "type": ["integer", "null"],
+      "description": "Legacy estimation flag from classic UN Comtrade format"
+    },
+    "isReported": {
+      "type": "boolean",
+      "description": "Whether data was officially reported (true) or mirrored from partner (false)"
+    },
+    "isAggrAbove": {
+      "type": "boolean",
+      "description": "Whether values are aggregated above the requested commodity level"
+    }
+  },
+  "required": [
+    "typeCode",
+    "freqCode",
+    "period",
+    "reporterCode",
+    "flowCode",
+    "cmdCode"
+  ],
+  "additionalProperties": true
+}

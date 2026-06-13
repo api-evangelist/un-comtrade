@@ -1,0 +1,242 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "un": "https://unstats.un.org/unsd/trade/",
+    "comtrade": "https://comtradeapi.un.org/vocab/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "TradeDataset": "un:TradeDataset",
+    "TradeRecord": "un:TradeRecord",
+    "DataAvailability": "un:DataAvailability",
+
+    "typeCode": {
+      "@id": "comtrade:typeCode",
+      "@type": "xsd:string"
+    },
+    "freqCode": {
+      "@id": "comtrade:freqCode",
+      "@type": "xsd:string"
+    },
+    "refYear": {
+      "@id": "comtrade:refYear",
+      "@type": "xsd:integer"
+    },
+    "refMonth": {
+      "@id": "comtrade:refMonth",
+      "@type": "xsd:integer"
+    },
+    "period": {
+      "@id": "comtrade:period",
+      "@type": "xsd:string"
+    },
+    "reporterCode": {
+      "@id": "comtrade:reporterCode",
+      "@type": "xsd:integer"
+    },
+    "reporterISO": {
+      "@id": "comtrade:reporterISO",
+      "@type": "xsd:string"
+    },
+    "reporterDesc": {
+      "@id": "comtrade:reporterDesc",
+      "@type": "xsd:string"
+    },
+    "flowCode": {
+      "@id": "comtrade:flowCode",
+      "@type": "xsd:string"
+    },
+    "flowDesc": {
+      "@id": "comtrade:flowDesc",
+      "@type": "xsd:string"
+    },
+    "partnerCode": {
+      "@id": "comtrade:partnerCode",
+      "@type": "xsd:integer"
+    },
+    "partnerISO": {
+      "@id": "comtrade:partnerISO",
+      "@type": "xsd:string"
+    },
+    "partnerDesc": {
+      "@id": "comtrade:partnerDesc",
+      "@type": "xsd:string"
+    },
+    "classificationCode": {
+      "@id": "comtrade:classificationCode",
+      "@type": "xsd:string"
+    },
+    "cmdCode": {
+      "@id": "comtrade:cmdCode",
+      "@type": "xsd:string"
+    },
+    "cmdDesc": {
+      "@id": "comtrade:cmdDesc",
+      "@type": "xsd:string"
+    },
+    "aggrLevel": {
+      "@id": "comtrade:aggrLevel",
+      "@type": "xsd:integer"
+    },
+    "netWgt": {
+      "@id": "comtrade:netWgt",
+      "@type": "xsd:decimal"
+    },
+    "grossWgt": {
+      "@id": "comtrade:grossWgt",
+      "@type": "xsd:decimal"
+    },
+    "cifvalue": {
+      "@id": "comtrade:cifvalue",
+      "@type": "xsd:decimal"
+    },
+    "fobvalue": {
+      "@id": "comtrade:fobvalue",
+      "@type": "xsd:decimal"
+    },
+    "primaryValue": {
+      "@id": "comtrade:primaryValue",
+      "@type": "xsd:decimal"
+    },
+    "isReported": {
+      "@id": "comtrade:isReported",
+      "@type": "xsd:boolean"
+    },
+    "qty": {
+      "@id": "comtrade:qty",
+      "@type": "xsd:decimal"
+    },
+    "qtyUnitAbbr": {
+      "@id": "comtrade:qtyUnitAbbr",
+      "@type": "xsd:string"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "https://comtradeapi.un.org",
+      "@type": "WebAPI",
+      "name": "UN Comtrade Data API",
+      "description": "REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Covers over 200 reporting countries with data spanning goods and services trade classified by HS, SITC, and other commodity codes.",
+      "url": "https://comtradeapi.un.org",
+      "documentation": "https://uncomtrade.org/docs/un-comtrade-api/",
+      "provider": {
+        "@type": "Organization",
+        "name": "United Nations Statistics Division",
+        "url": "https://unstats.un.org/",
+        "email": "comtrade@un.org",
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "United Nations",
+          "url": "https://www.un.org/"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://comtradeplus.un.org/",
+        "description": "Free B2C account with API subscription key. Premium plans available for bulk access.",
+        "priceCurrency": "USD"
+      },
+      "termsOfService": "https://uncomtrade.org/docs/api-subscription-keys/",
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://comtradeapi.un.org",
+        "serviceType": "REST API"
+      },
+      "potentialAction": [
+        {
+          "@type": "SearchAction",
+          "name": "Preview Trade Data",
+          "target": "https://comtradeapi.un.org/public/v1/preview/{typeCode}/{freqCode}/{clCode}",
+          "description": "Preview up to 500 trade records without authentication"
+        },
+        {
+          "@type": "SearchAction",
+          "name": "Get Final Trade Data",
+          "target": "https://comtradeapi.un.org/data/v1/get/{typeCode}/{freqCode}/{clCode}",
+          "description": "Extract up to 250,000 trade records per call (authenticated)"
+        },
+        {
+          "@type": "SearchAction",
+          "name": "Get Bulk Trade Data",
+          "target": "https://comtradeapi.un.org/bulk/v1/get/{typeCode}/{freqCode}/{clCode}",
+          "description": "Retrieve bulk file links for large dataset downloads (premium)"
+        }
+      ],
+      "softwareRequirements": "API subscription key from https://comtradeplus.un.org/",
+      "keywords": [
+        "international trade",
+        "import",
+        "export",
+        "trade statistics",
+        "commodities",
+        "HS codes",
+        "SITC",
+        "bilateral trade",
+        "United Nations",
+        "economics",
+        "tariffline"
+      ],
+      "inLanguage": "en",
+      "license": "https://data.un.org/Host.aspx?Content=UNdataUsePolicy",
+      "sdPublisher": {
+        "@type": "Organization",
+        "name": "United Nations Statistics Division"
+      }
+    },
+    {
+      "@id": "https://comtradeapi.un.org/public/v1/preview",
+      "@type": "EntryPoint",
+      "name": "Preview Final Trade Data (Public)",
+      "description": "Public endpoint for previewing up to 500 records of final trade data without authentication.",
+      "httpMethod": "GET",
+      "urlTemplate": "https://comtradeapi.un.org/public/v1/preview/{typeCode}/{freqCode}/{clCode}",
+      "actionApplication": {
+        "@id": "https://comtradeapi.un.org"
+      }
+    },
+    {
+      "@id": "https://comtradeapi.un.org/data/v1/get",
+      "@type": "EntryPoint",
+      "name": "Get Final Trade Data",
+      "description": "Authenticated endpoint for extracting up to 250,000 records of final trade data per call.",
+      "httpMethod": "GET",
+      "urlTemplate": "https://comtradeapi.un.org/data/v1/get/{typeCode}/{freqCode}/{clCode}",
+      "actionApplication": {
+        "@id": "https://comtradeapi.un.org"
+      }
+    },
+    {
+      "@id": "https://comtradeapi.un.org/data/v1/getTariffline",
+      "@type": "EntryPoint",
+      "name": "Get Tariffline Trade Data",
+      "description": "Extract tariffline-level trade data with 6-digit or national commodity code detail.",
+      "httpMethod": "GET",
+      "urlTemplate": "https://comtradeapi.un.org/data/v1/getTariffline/{typeCode}/{freqCode}/{clCode}",
+      "actionApplication": {
+        "@id": "https://comtradeapi.un.org"
+      }
+    },
+    {
+      "@id": "https://comtradeapi.un.org/bulk/v1/get",
+      "@type": "EntryPoint",
+      "name": "Bulk Download Trade Data",
+      "description": "Premium endpoint for bulk file downloads supporting up to 2.5 million records via async processing.",
+      "httpMethod": "GET",
+      "urlTemplate": "https://comtradeapi.un.org/bulk/v1/get/{typeCode}/{freqCode}/{clCode}",
+      "actionApplication": {
+        "@id": "https://comtradeapi.un.org"
+      }
+    },
+    {
+      "@id": "https://comtradeapi.un.org/files/v1/app/reference/country_groups.json",
+      "@type": "EntryPoint",
+      "name": "Get Reference Country Groups",
+      "description": "Public reference data for country groupings used in UN Comtrade reporting.",
+      "httpMethod": "GET",
+      "contentType": "application/json",
+      "actionApplication": {
+        "@id": "https://comtradeapi.un.org"
+      }
+    }
+  ]
+}

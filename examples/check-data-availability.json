@@ -1,0 +1,89 @@
+{
+  "title": "Check Annual HS Data Availability — European Reporters (2022)",
+  "description": "Example request to check which European countries have submitted annual HS trade data for 2022 before attempting data extraction.",
+  "request": {
+    "method": "GET",
+    "url": "https://comtradeapi.un.org/data/v1/getDa/C/A/HS",
+    "queryParameters": {
+      "reporterCode": "276,250,380,724,528",
+      "period": "2022"
+    },
+    "headers": {
+      "Ocp-Apim-Subscription-Key": "{YOUR_SUBSCRIPTION_KEY}"
+    }
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "elapsedMs": 58,
+      "count": 5,
+      "validationStatus": "Ok",
+      "error": null,
+      "data": [
+        {
+          "typeCode": "C",
+          "freqCode": "A",
+          "classificationCode": "HS",
+          "reporterCode": 276,
+          "reporterISO": "DEU",
+          "reporterDesc": "Germany",
+          "period": "2022",
+          "isOriginalClassification": true,
+          "isPartnerDetail": true,
+          "isCmdDetail": true
+        },
+        {
+          "typeCode": "C",
+          "freqCode": "A",
+          "classificationCode": "HS",
+          "reporterCode": 250,
+          "reporterISO": "FRA",
+          "reporterDesc": "France",
+          "period": "2022",
+          "isOriginalClassification": true,
+          "isPartnerDetail": true,
+          "isCmdDetail": true
+        },
+        {
+          "typeCode": "C",
+          "freqCode": "A",
+          "classificationCode": "HS",
+          "reporterCode": 380,
+          "reporterISO": "ITA",
+          "reporterDesc": "Italy",
+          "period": "2022",
+          "isOriginalClassification": true,
+          "isPartnerDetail": true,
+          "isCmdDetail": true
+        },
+        {
+          "typeCode": "C",
+          "freqCode": "A",
+          "classificationCode": "HS",
+          "reporterCode": 724,
+          "reporterISO": "ESP",
+          "reporterDesc": "Spain",
+          "period": "2022",
+          "isOriginalClassification": true,
+          "isPartnerDetail": true,
+          "isCmdDetail": true
+        },
+        {
+          "typeCode": "C",
+          "freqCode": "A",
+          "classificationCode": "HS",
+          "reporterCode": 528,
+          "reporterISO": "NLD",
+          "reporterDesc": "Netherlands",
+          "period": "2022",
+          "isOriginalClassification": true,
+          "isPartnerDetail": true,
+          "isCmdDetail": true
+        }
+      ]
+    }
+  }
+}

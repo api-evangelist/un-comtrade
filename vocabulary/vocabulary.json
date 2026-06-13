@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UN Comtrade API Vocabulary",
+  "description": "Controlled vocabulary and domain terms used in the UN Comtrade API, covering trade types, classifications, flow codes, and parameter values.",
+  "version": "1.0.0",
+  "source": "https://uncomtrade.org/docs/un-comtrade-api/",
+  "terms": {
+    "typeCode": {
+      "label": "Trade Type Code",
+      "description": "Indicates whether the trade data covers physical goods (commodities) or intangible services.",
+      "values": {
+        "C": "Goods / Commodities — physical merchandise traded across borders",
+        "S": "Services — intangible trade including transportation, travel, financial, insurance, and other services"
+      }
+    },
+    "freqCode": {
+      "label": "Frequency Code",
+      "description": "The reporting frequency of the trade data.",
+      "values": {
+        "A": "Annual — data aggregated for the full calendar year",
+        "M": "Monthly — data reported on a month-by-month basis (YYYYMM format)"
+      }
+    },
+    "flowCode": {
+      "label": "Trade Flow Code",
+      "description": "The direction and type of trade transaction.",
+      "values": {
+        "M": "Import — goods entering the reporting country from the partner country",
+        "X": "Export — goods leaving the reporting country to the partner country",
+        "MIP": "Import (In-transit) — goods in transit through the reporting country",
+        "XIP": "Export (In-transit) — goods exported while in transit through the reporting country",
+        "MOP": "Import for Outward Processing — goods imported for processing and re-export",
+        "XOP": "Export for Outward Processing — goods exported for processing abroad",
+        "RM": "Re-import — previously exported goods returned",
+        "RX": "Re-export — previously imported goods exported to a third country"
+      }
+    },
+    "classificationCode": {
+      "label": "Commodity Classification Code",
+      "description": "The international trade classification system and revision used to categorize commodities.",
+      "values": {
+        "HS": "Harmonized System (latest revision) — the WCO international customs classification standard",
+        "H5": "HS 2017 (Revision 5)",
+        "H4": "HS 2012 (Revision 4)",
+        "H3": "HS 2007 (Revision 3)",
+        "H2": "HS 2002 (Revision 2)",
+        "H1": "HS 1996 (Revision 1)",
+        "H0": "HS 1992 (Revision 0)",
+        "S4": "SITC Revision 4 — Standard International Trade Classification",
+        "S3": "SITC Revision 3",
+        "S2": "SITC Revision 2",
+        "S1": "SITC Revision 1",
+        "S0": "SITC Revision 0",
+        "B4": "BEC Revision 4 — Broad Economic Categories",
+        "B3": "BEC Revision 3",
+        "EB02": "Extended BEC Revision 2"
+      }
+    },
+    "aggrLevel": {
+      "label": "Aggregation Level",
+      "description": "The level of commodity detail in the Harmonized System classification.",
+      "values": {
+        "0": "Total — all commodities aggregated",
+        "1": "Section — broadest HS grouping (21 sections)",
+        "2": "Chapter — 2-digit HS code (e.g., Chapter 84: Machinery)",
+        "3": "Sub-chapter",
+        "4": "Heading — 4-digit HS code",
+        "5": "Sub-heading",
+        "6": "Sub-heading — 6-digit HS code (most granular internationally harmonized level)"
+      }
+    },
+    "format": {
+      "label": "Response Format",
+      "description": "The output format for API responses.",
+      "values": {
+        "json": "JSON (default) — structured JSON response",
+        "csv": "CSV — comma-separated values for spreadsheet use",
+        "txt": "TXT — tab-delimited text format"
+      }
+    },
+    "breakdownMode": {
+      "label": "Breakdown Mode",
+      "description": "The column structure variant for trade data responses.",
+      "values": {
+        "classic": "Classic — legacy column structure compatible with original UN Comtrade format",
+        "plus": "Plus — extended column structure with additional fields (default for Comtrade+)"
+      }
+    },
+    "partnerCode": {
+      "label": "Partner Country Code",
+      "description": "UN M49 numeric code for the trading partner country.",
+      "specialValues": {
+        "0": "World — aggregate of all partner countries",
+        "290": "Areas NES — areas not elsewhere specified",
+        "472": "Free Zones",
+        "837": "Bunkers",
+        "838": "Ship Stores and Bunkers",
+        "839": "Unspecified"
+      }
+    },
+    "reporterCode": {
+      "label": "Reporter Country Code",
+      "description": "UN M49 numeric code for the country reporting the trade data. M49 codes align with ISO 3166-1 for most countries.",
+      "examples": {
+        "840": "United States of America",
+        "156": "China",
+        "276": "Germany",
+        "826": "United Kingdom",
+        "392": "Japan",
+        "410": "Republic of Korea",
+        "356": "India",
+        "250": "France",
+        "380": "Italy",
+        "76": "Brazil"
+      }
+    },
+    "valueTypes": {
+      "label": "Trade Value Types",
+      "description": "Methods of valuing trade transactions used in UN Comtrade data.",
+      "values": {
+        "fobvalue": "FOB (Free On Board) — export value at the point of departure; does not include international freight and insurance",
+        "cifvalue": "CIF (Cost, Insurance, Freight) — import value at the point of destination; includes international freight and insurance costs",
+        "primaryValue": "Primary Value — the main trade value reported (FOB for exports, CIF for imports)"
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "title": "Get Bilateral Trade Data — China-USA Monthly HS Chapter 84 (2023)",
+  "description": "Example authenticated request to retrieve monthly import data for HS Chapter 84 (nuclear reactors, boilers, machinery) between China and the United States for 2023.",
+  "request": {
+    "method": "GET",
+    "url": "https://comtradeapi.un.org/data/v1/get/C/M/HS",
+    "queryParameters": {
+      "reporterCode": "156",
+      "partnerCode": "840",
+      "period": "202301,202302,202303",
+      "cmdCode": "84",
+      "flowCode": "M",
+      "maxRecords": "10",
+      "format": "json",
+      "breakdownMode": "plus",
+      "includeDesc": "true"
+    },
+    "headers": {
+      "Ocp-Apim-Subscription-Key": "{YOUR_SUBSCRIPTION_KEY}"
+    }
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "elapsedMs": 287,
+      "count": 3,
+      "validationStatus": "Ok",
+      "error": null,
+      "data": [
+        {
+          "typeCode": "C",
+          "freqCode": "M",
+          "refPeriodId": 202301,
+          "refYear": 2023,
+          "refMonth": 1,
+          "period": "202301",
+          "reporterCode": 156,
+          "reporterISO": "CHN",
+          "reporterDesc": "China",
+          "flowCode": "M",
+          "flowDesc": "Import",
+          "partnerCode": 840,
+          "partnerISO": "USA",
+          "partnerDesc": "United States of America",
+          "partner2Code": null,
+          "partner2ISO": null,
+          "partner2Desc": null,
+          "classificationCode": "HS",
+          "classificationSearchCode": "HS",
+          "isOriginalClassification": true,
+          "cmdCode": "84",
+          "cmdDesc": "Nuclear reactors, boilers, machinery and mechanical appliances; parts thereof",
+          "aggrLevel": 2,
+          "isLeaf": false,
+          "customsCode": "C00",
+          "customsDesc": "General Trade",
+          "mosCode": null,
+          "motCode": null,
+          "motDesc": null,
+          "qtyUnitCode": null,
+          "qtyUnitAbbr": null,
+          "qty": null,
+          "isQtyEstimated": false,
+          "altQtyUnitCode": null,
+          "altQtyUnitAbbr": null,
+          "altQty": null,
+          "isAltQtyEstimated": false,
+          "netWgt": 142530000,
+          "isNetWgtEstimated": false,
+          "grossWgt": null,
+          "isGrossWgtEstimated": false,
+          "cifvalue": 3187420000,
+          "fobvalue": null,
+          "primaryValue": 3187420000,
+          "legacyEstimationFlag": 0,
+          "isReported": true,
+          "isAggrAbove": false
+        }
+      ]
+    }
+  }
+}

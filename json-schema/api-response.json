@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/un-comtrade/main/json-schema/api-response.json",
+  "title": "UN Comtrade API Response Envelope",
+  "description": "Standard response envelope returned by all UN Comtrade API endpoints.",
+  "type": "object",
+  "properties": {
+    "elapsedMs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Server-side processing time in milliseconds"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of records returned in this response"
+    },
+    "data": {
+      "type": "array",
+      "description": "Array of result records; schema varies by endpoint",
+      "items": {}
+    },
+    "error": {
+      "type": ["string", "null"],
+      "description": "Error message if the request failed; null on success"
+    },
+    "validationStatus": {
+      "type": "string",
+      "description": "Validation status message for the request parameters"
+    },
+    "countReleased": {
+      "type": ["integer", "null"],
+      "description": "Total records available in the dataset for this query (may exceed count)"
+    }
+  },
+  "required": ["count", "data"],
+  "additionalProperties": true
+}

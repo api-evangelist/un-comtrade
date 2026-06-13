@@ -1,0 +1,951 @@
+openapi: 3.0.3
+info:
+  title: UN Comtrade Data API
+  description: >
+    REST API for extracting international merchandise and services trade statistics
+    from the United Nations Comtrade database. Provides access to final trade data,
+    tariffline data, data availability, metadata, live updates, and bulk file downloads.
+    Covers over 200 reporting countries and territories with data spanning goods and
+    services trade classified by HS, SITC, and other commodity codes.
+    Requires a free B2C account and API subscription key for full access.
+  version: '1.0.0'
+  contact:
+    name: UN Comtrade Support
+    email: comtrade@un.org
+  x-subscriptions-contact:
+    name: UN Comtrade Subscriptions
+    email: subscriptions@un.org
+  x-logo:
+    url: https://comtradeplus.un.org/favicon.ico
+  license:
+    name: UN Data Terms of Use
+    url: https://uncomtrade.org/docs/
+
+externalDocs:
+  description: UN Comtrade API Documentation
+  url: https://uncomtrade.org/docs/un-comtrade-api/
+
+servers:
+  - url: https://comtradeapi.un.org
+    description: UN Comtrade API Production Server
+
+tags:
+  - name: Public Preview
+    description: Public endpoints requiring no authentication — limited to 500 records.
+  - name: Final Trade Data
+    description: Authenticated endpoints for full final trade data extraction (up to 250,000 records per call).
+  - name: Tariffline Data
+    description: Tariffline-level trade data with 6-digit or national commodity code detail.
+  - name: Data Availability
+    description: Endpoints for discovering which countries/periods have submitted data.
+  - name: Bulk Download
+    description: Premium endpoints for bulk file downloads (up to 2.5M records via async processing).
+  - name: Reference Data
+    description: Public reference data including country groups.
+
+components:
+  securitySchemes:
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: Ocp-Apim-Subscription-Key
+      description: >
+        API subscription key obtained after registering a free B2C account at
+        https://comtradeplus.un.org/ and subscribing to the relevant API product.
+
+  parameters:
+    typeCode:
+      name: typeCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum: [C, S]
+      description: "Trade type: C for Goods (Commodities), S for Services"
+      example: C
+
+    freqCode:
+      name: freqCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum: [A, M]
+      description: "Reporting frequency: A for Annual, M for Monthly"
+      example: A
+
+    clCode:
+      name: clCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum: [HS, H5, H4, H3, H2, H1, H0, S4, S3, S2, S1, S0, B4, B3, EB02]
+      description: "Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)"
+      example: HS
+
+    reporterCode:
+      name: reporterCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: "UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA."
+      example: "840"
+
+    partnerCode:
+      name: partnerCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: "UN M49 numeric country code for the partner country. Use 0 for World."
+      example: "0"
+
+    partner2Code:
+      name: partner2Code
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Secondary partner country code (used for triangular trade).
+
+    period:
+      name: period
+      in: query
+      required: false
+      schema:
+        type: string
+      description: "Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values."
+      example: "2023"
+
+    cmdCode:
+      name: cmdCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: "Commodity code(s), comma-separated. Use TOTAL for aggregate."
+      example: "TOTAL"
+
+    flowCode:
+      name: flowCode
+      in: query
+      required: false
+      schema:
+        type: string
+        enum: [M, X, MIP, XIP, MOP, XOP, RM, RX]
+      description: "Trade flow: M=Import, X=Export, MIP=Import in-transit, XIP=Export in-transit, MOP=Import of goods for outward processing, XOP=Export for outward processing, RM=Re-import, RX=Re-export"
+      example: X
+
+    maxRecords:
+      name: maxRecords
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+      description: Maximum number of records to return. For preview endpoints capped at 500.
+
+    format:
+      name: format
+      in: query
+      required: false
+      schema:
+        type: string
+        enum: [json, csv, txt]
+        default: json
+      description: "Response format: json (default), csv, or txt"
+
+    breakdownMode:
+      name: breakdownMode
+      in: query
+      required: false
+      schema:
+        type: string
+        enum: [classic, plus]
+      description: "Data breakdown mode: classic (legacy columns) or plus (extended columns)"
+
+    includeDesc:
+      name: includeDesc
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: true
+      description: Include commodity and country description labels in the response.
+
+    motCode:
+      name: motCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Mode of transport code.
+
+    customsCode:
+      name: customsCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Customs procedure code.
+
+  schemas:
+    TradeRecord:
+      type: object
+      description: A single international trade data record.
+      properties:
+        typeCode:
+          type: string
+          description: "Trade type code: C or S"
+        freqCode:
+          type: string
+          description: "Frequency code: A or M"
+        refPeriodId:
+          type: integer
+          description: Reference period as integer (YYYY or YYYYMM)
+        refYear:
+          type: integer
+          description: Reference year
+        refMonth:
+          type: integer
+          description: "Reference month (1–12, or 99 for annual)"
+        period:
+          type: string
+          description: "Period string: YYYY or YYYYMM"
+        reporterCode:
+          type: integer
+          description: UN M49 code for the reporting country
+        reporterISO:
+          type: string
+          description: ISO alpha-3 code for the reporting country
+        reporterDesc:
+          type: string
+          description: Name of the reporting country
+        flowCode:
+          type: string
+          description: Trade flow code
+        flowDesc:
+          type: string
+          description: Trade flow description
+        partnerCode:
+          type: integer
+          description: UN M49 code for the partner country
+        partnerISO:
+          type: string
+          description: ISO alpha-3 code for the partner country
+        partnerDesc:
+          type: string
+          description: Name of the partner country
+        partner2Code:
+          type: integer
+          description: Secondary partner code
+        partner2ISO:
+          type: string
+          description: Secondary partner ISO alpha-3 code
+        partner2Desc:
+          type: string
+          description: Secondary partner name
+        classificationCode:
+          type: string
+          description: Commodity classification code (HS, SITC, etc.)
+        classificationSearchCode:
+          type: string
+          description: Classification search code used for querying
+        isOriginalClassification:
+          type: boolean
+          description: Whether classification is the original reported classification
+        cmdCode:
+          type: string
+          description: Commodity code
+        cmdDesc:
+          type: string
+          description: Commodity description
+        aggrLevel:
+          type: integer
+          description: "Commodity aggregation level (e.g., 2, 4, 6 for HS)"
+        isLeaf:
+          type: boolean
+          description: Whether this is a leaf-level commodity code
+        customsCode:
+          type: string
+          description: Customs procedure code
+        customsDesc:
+          type: string
+          description: Customs procedure description
+        mosCode:
+          type: string
+          description: Mode of supply code (services)
+        motCode:
+          type: integer
+          description: Mode of transport code
+        motDesc:
+          type: string
+          description: Mode of transport description
+        qtyUnitCode:
+          type: integer
+          description: Quantity unit code
+        qtyUnitAbbr:
+          type: string
+          description: Quantity unit abbreviation
+        qty:
+          type: number
+          description: Quantity traded
+        isQtyEstimated:
+          type: boolean
+          description: Whether quantity is estimated
+        altQtyUnitCode:
+          type: integer
+          description: Alternative quantity unit code
+        altQtyUnitAbbr:
+          type: string
+          description: Alternative quantity unit abbreviation
+        altQty:
+          type: number
+          description: Alternative quantity
+        isAltQtyEstimated:
+          type: boolean
+          description: Whether alternative quantity is estimated
+        netWgt:
+          type: number
+          description: Net weight in kilograms
+        isNetWgtEstimated:
+          type: boolean
+          description: Whether net weight is estimated
+        grossWgt:
+          type: number
+          description: Gross weight in kilograms
+        isGrossWgtEstimated:
+          type: boolean
+          description: Whether gross weight is estimated
+        cifvalue:
+          type: number
+          description: CIF (Cost, Insurance, Freight) value in USD
+        fobvalue:
+          type: number
+          description: FOB (Free On Board) value in USD
+        primaryValue:
+          type: number
+          description: Primary trade value in USD
+        legacyEstimationFlag:
+          type: integer
+          description: Legacy estimation flag
+        isReported:
+          type: boolean
+          description: Whether data was officially reported (vs. mirrored)
+        isAggrAbove:
+          type: boolean
+          description: Whether values are aggregated above requested level
+
+    DataAvailabilityRecord:
+      type: object
+      description: Indicates whether trade data is available for a given reporter/period.
+      properties:
+        typeCode:
+          type: string
+        freqCode:
+          type: string
+        reporterCode:
+          type: integer
+        reporterISO:
+          type: string
+        reporterDesc:
+          type: string
+        period:
+          type: string
+        isOriginalClassification:
+          type: boolean
+        isPartnerDetail:
+          type: boolean
+        isCmdDetail:
+          type: boolean
+
+    MetadataRecord:
+      type: object
+      description: Reference metadata record (reporter, partner, or commodity entry).
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        parent:
+          type: string
+        isLeaf:
+          type: boolean
+        aggLevel:
+          type: integer
+
+    LiveUpdateRecord:
+      type: object
+      description: Information about a recent data publication or update.
+      properties:
+        typeCode:
+          type: string
+        freqCode:
+          type: string
+        classificationCode:
+          type: string
+        reporterCode:
+          type: integer
+        reporterISO:
+          type: string
+        reporterDesc:
+          type: string
+        period:
+          type: string
+        publishedDate:
+          type: string
+          format: date-time
+
+    BulkFileRecord:
+      type: object
+      description: Bulk file download reference.
+      properties:
+        typeCode:
+          type: string
+        freqCode:
+          type: string
+        classificationCode:
+          type: string
+        reporterCode:
+          type: integer
+        reporterISO:
+          type: string
+        reporterDesc:
+          type: string
+        period:
+          type: string
+        fileUrl:
+          type: string
+          format: uri
+        fileSize:
+          type: integer
+        publishedDate:
+          type: string
+          format: date-time
+
+    ApiResponse:
+      type: object
+      description: Standard UN Comtrade API response envelope.
+      properties:
+        elapsedMs:
+          type: integer
+          description: Time taken to process the request in milliseconds
+        count:
+          type: integer
+          description: Number of records returned
+        data:
+          type: array
+          items: {}
+          description: Array of result records
+        error:
+          type: string
+          nullable: true
+          description: Error message if request failed
+        validationStatus:
+          type: string
+          description: Validation status of the request
+
+    CountryGroup:
+      type: object
+      description: Reference data for a country grouping.
+      properties:
+        groupCode:
+          type: string
+        groupDesc:
+          type: string
+        memberCode:
+          type: integer
+        memberISO:
+          type: string
+        memberDesc:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+        details:
+          type: string
+
+  responses:
+    TradeDataResponse:
+      description: Successful trade data response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ApiResponse'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TradeRecord'
+        text/csv:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
+
+    UnauthorizedError:
+      description: Missing or invalid API subscription key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    TooManyRequestsError:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+security: []
+
+paths:
+  /public/v1/preview/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: previewFinalTradeData
+      summary: Preview Final Trade Data
+      description: >
+        Preview up to 500 records of final trade data without authentication.
+        Returns merchandise or services trade flows by reporter, partner,
+        commodity, and period. This public endpoint is rate-limited and suitable
+        for testing and exploration.
+      tags:
+        - Public Preview
+      parameters:
+        - $ref: '#/components/parameters/typeCode'
+        - $ref: '#/components/parameters/freqCode'
+        - $ref: '#/components/parameters/clCode'
+        - $ref: '#/components/parameters/reporterCode'
+        - $ref: '#/components/parameters/period'
+        - $ref: '#/components/parameters/cmdCode'
+        - $ref: '#/components/parameters/partnerCode'
+        - $ref: '#/components/parameters/partner2Code'
+        - $ref: '#/components/parameters/flowCode'
+        - name: maxRecords
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+          description: Maximum number of records to return (capped at 500)
+        - $ref: '#/components/parameters/format'
+        - $ref: '#/components/parameters/breakdownMode'
+        - $ref: '#/components/parameters/includeDesc'
+        - $ref: '#/components/parameters/motCode'
+        - $ref: '#/components/parameters/customsCode'
+      responses:
+        '200':
+          $ref: '#/components/responses/TradeDataResponse'
+        '400':
+          description: Bad request — invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsError'
+
+  /public/v1/getMetadata:
+    get:
+      operationId: previewMetadata
+      summary: Preview Metadata
+      description: >
+        Preview reference metadata (reporter lists, partner lists, commodity codes,
+        classification reference data) without authentication.
+      tags:
+        - Public Preview
+      parameters:
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: Successful metadata response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/MetadataRecord'
+
+  /public/v1/getDA/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: previewDataAvailability
+      summary: Preview Data Availability
+      description: >
+        Preview data availability information (which countries have submitted
+        data for given periods) without authentication.
+      tags:
+        - Public Preview
+      parameters:
+        - $ref: '#/components/parameters/typeCode'
+        - $ref: '#/components/parameters/freqCode'
+        - $ref: '#/components/parameters/clCode'
+        - $ref: '#/components/parameters/reporterCode'
+        - $ref: '#/components/parameters/period'
+      responses:
+        '200':
+          description: Successful data availability response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/DataAvailabilityRecord'
+
+  /data/v1/get/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: getFinalTradeData
+      summary: Get Final Trade Data
+      description: >
+        Extract up to 250,000 records of final trade data per call. Returns
+        merchandise or services trade flows filtered by reporter, partner,
+        commodity, period, and flow. Requires a valid API subscription key.
+      tags:
+        - Final Trade Data
+      security:
+        - ApiKeyHeader: []
+      parameters:
+        - $ref: '#/components/parameters/typeCode'
+        - $ref: '#/components/parameters/freqCode'
+        - $ref: '#/components/parameters/clCode'
+        - $ref: '#/components/parameters/reporterCode'
+        - $ref: '#/components/parameters/period'
+        - $ref: '#/components/parameters/cmdCode'
+        - $ref: '#/components/parameters/partnerCode'
+        - $ref: '#/components/parameters/partner2Code'
+        - $ref: '#/components/parameters/flowCode'
+        - name: maxRecords
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 250000
+          description: Maximum number of records to return (max 250,000)
+        - $ref: '#/components/parameters/format'
+        - $ref: '#/components/parameters/breakdownMode'
+        - $ref: '#/components/parameters/includeDesc'
+        - $ref: '#/components/parameters/motCode'
+        - $ref: '#/components/parameters/customsCode'
+      responses:
+        '200':
+          $ref: '#/components/responses/TradeDataResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsError'
+
+  /data/v1/getTariffline/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: getTarifflineData
+      summary: Get Tariffline Trade Data
+      description: >
+        Extract tariffline-level trade data with full 6-digit HS or national
+        commodity code detail. Provides more granular breakdown than final
+        aggregated data. Requires a valid API subscription key.
+      tags:
+        - Tariffline Data
+      security:
+        - ApiKeyHeader: []
+      parameters:
+        - $ref: '#/components/parameters/typeCode'
+        - $ref: '#/components/parameters/freqCode'
+        - $ref: '#/components/parameters/clCode'
+        - $ref: '#/components/parameters/reporterCode'
+        - $ref: '#/components/parameters/period'
+        - $ref: '#/components/parameters/cmdCode'
+        - $ref: '#/components/parameters/partnerCode'
+        - $ref: '#/components/parameters/flowCode'
+        - $ref: '#/components/parameters/format'
+        - $ref: '#/components/parameters/includeDesc'
+      responses:
+        '200':
+          $ref: '#/components/responses/TradeDataResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsError'
+
+  /data/v1/getDa/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: getDataAvailability
+      summary: Get Data Availability
+      description: >
+        Retrieve information about which reporting countries have submitted
+        trade data for given periods and classifications. Useful for determining
+        what data is available before making data extraction calls.
+      tags:
+        - Data Availability
+      security:
+        - ApiKeyHeader: []
+      parameters:
+        - $ref: '#/components/parameters/typeCode'
+        - $ref: '#/components/parameters/freqCode'
+        - $ref: '#/components/parameters/clCode'
+        - $ref: '#/components/parameters/reporterCode'
+        - $ref: '#/components/parameters/period'
+      responses:
+        '200':
+          description: Successful data availability response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/DataAvailabilityRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /data/v1/getDaTariffline/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: getDataAvailabilityTariffline
+      summary: Get Data Availability for Tariffline
+      description: >
+        Retrieve data availability information specific to tariffline datasets,
+        indicating which reporters have submitted tariffline-level data for
+        given periods and classifications.
+      tags:
+        - Data Availability
+      security:
+        - ApiKeyHeader: []
+      parameters:
+        - $ref: '#/components/parameters/typeCode'
+        - $ref: '#/components/parameters/freqCode'
+        - $ref: '#/components/parameters/clCode'
+        - $ref: '#/components/parameters/reporterCode'
+        - $ref: '#/components/parameters/period'
+      responses:
+        '200':
+          description: Successful tariffline data availability response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/DataAvailabilityRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /data/v1/getLiveUpdate:
+    get:
+      operationId: getLiveUpdate
+      summary: Get Live Updates
+      description: >
+        Retrieve information about recent data publications and updates to the
+        UN Comtrade database. Useful for monitoring when new country-period
+        data becomes available.
+      tags:
+        - Final Trade Data
+      security:
+        - ApiKeyHeader: []
+      parameters:
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: Successful live update response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/LiveUpdateRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /data/v1/getMetadata:
+    get:
+      operationId: getMetadata
+      summary: Get Metadata
+      description: >
+        Retrieve reference metadata including reporter country lists, partner
+        country lists, commodity codes, and classification reference data.
+        Used for building valid filter values for data extraction calls.
+      tags:
+        - Final Trade Data
+      security:
+        - ApiKeyHeader: []
+      parameters:
+        - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: Successful metadata response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/MetadataRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /bulk/v1/get/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: bulkGetTradeData
+      summary: Bulk Download Trade Data
+      description: >
+        Retrieve links to bulk files containing large trade datasets. Supports
+        downloads up to 2.5 million records via asynchronous processing.
+        Returns file URLs rather than inline data. Requires a premium subscription.
+      tags:
+        - Bulk Download
+      security:
+        - ApiKeyHeader: []
+      parameters:
+        - $ref: '#/components/parameters/typeCode'
+        - $ref: '#/components/parameters/freqCode'
+        - $ref: '#/components/parameters/clCode'
+        - $ref: '#/components/parameters/reporterCode'
+        - $ref: '#/components/parameters/period'
+      responses:
+        '200':
+          description: Successful bulk file listing response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/BulkFileRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: Premium subscription required for bulk access
+
+  /bulk/v1/getTariffline/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: bulkGetTarifflineData
+      summary: Bulk Download Tariffline Data
+      description: >
+        Retrieve bulk file links for tariffline-level trade data. Each file
+        contains complete tariffline data for a single reporter and period.
+        Requires a premium subscription.
+      tags:
+        - Bulk Download
+      security:
+        - ApiKeyHeader: []
+      parameters:
+        - $ref: '#/components/parameters/typeCode'
+        - $ref: '#/components/parameters/freqCode'
+        - $ref: '#/components/parameters/clCode'
+        - $ref: '#/components/parameters/reporterCode'
+        - $ref: '#/components/parameters/period'
+      responses:
+        '200':
+          description: Successful bulk tariffline file listing response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/BulkFileRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: Premium subscription required for bulk access
+
+  /bulk/v1/getClassic/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: bulkGetClassicData
+      summary: Bulk Download Classic Format
+      description: >
+        Retrieve bulk files in classic UN Comtrade format for backward
+        compatibility with legacy integrations and systems that rely on
+        the original column structure. Requires a premium subscription.
+      tags:
+        - Bulk Download
+      security:
+        - ApiKeyHeader: []
+      parameters:
+        - $ref: '#/components/parameters/typeCode'
+        - $ref: '#/components/parameters/freqCode'
+        - $ref: '#/components/parameters/clCode'
+        - $ref: '#/components/parameters/reporterCode'
+        - $ref: '#/components/parameters/period'
+      responses:
+        '200':
+          description: Successful classic format bulk file listing response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/BulkFileRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: Premium subscription required for bulk access
+
+  /files/v1/app/reference/country_groups.json:
+    get:
+      operationId: getReferenceCountryGroups
+      summary: Get Reference Data - Country Groups
+      description: >
+        Retrieve reference data for country groups used in trade reporting
+        and partner aggregation. Country groups are regional or economic
+        groupings of UN member states. No authentication required.
+      tags:
+        - Reference Data
+      responses:
+        '200':
+          description: Successful country groups reference response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CountryGroup'

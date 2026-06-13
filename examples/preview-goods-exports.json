@@ -1,0 +1,81 @@
+{
+  "title": "Preview Annual Goods Exports — US to World (2023)",
+  "description": "Example request and response for previewing annual merchandise export data for the United States to all partners in 2023 using the HS classification system.",
+  "request": {
+    "method": "GET",
+    "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS",
+    "queryParameters": {
+      "reporterCode": "840",
+      "period": "2023",
+      "flowCode": "X",
+      "partnerCode": "0",
+      "cmdCode": "TOTAL",
+      "maxRecords": "5",
+      "format": "json"
+    },
+    "headers": {}
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "elapsedMs": 142,
+      "count": 1,
+      "validationStatus": "Ok",
+      "error": null,
+      "data": [
+        {
+          "typeCode": "C",
+          "freqCode": "A",
+          "refPeriodId": 2023,
+          "refYear": 2023,
+          "refMonth": 99,
+          "period": "2023",
+          "reporterCode": 840,
+          "reporterISO": "USA",
+          "reporterDesc": "United States of America",
+          "flowCode": "X",
+          "flowDesc": "Export",
+          "partnerCode": 0,
+          "partnerISO": "W00",
+          "partnerDesc": "World",
+          "partner2Code": null,
+          "partner2ISO": null,
+          "partner2Desc": null,
+          "classificationCode": "HS",
+          "classificationSearchCode": "HS",
+          "isOriginalClassification": true,
+          "cmdCode": "TOTAL",
+          "cmdDesc": "All Commodities",
+          "aggrLevel": 0,
+          "isLeaf": false,
+          "customsCode": "C00",
+          "customsDesc": "General Trade",
+          "mosCode": null,
+          "motCode": null,
+          "motDesc": null,
+          "qtyUnitCode": null,
+          "qtyUnitAbbr": null,
+          "qty": null,
+          "isQtyEstimated": false,
+          "altQtyUnitCode": null,
+          "altQtyUnitAbbr": null,
+          "altQty": null,
+          "isAltQtyEstimated": false,
+          "netWgt": null,
+          "isNetWgtEstimated": false,
+          "grossWgt": null,
+          "isGrossWgtEstimated": false,
+          "cifvalue": null,
+          "fobvalue": 2019724621000,
+          "primaryValue": 2019724621000,
+          "legacyEstimationFlag": 0,
+          "isReported": true,
+          "isAggrAbove": false
+        }
+      ]
+    }
+  }
+}
