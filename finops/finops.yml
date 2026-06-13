@@ -1,0 +1,56 @@
+finops:
+  provider: UN Comtrade
+  description: Financial operations and cost management guidance for UN Comtrade API consumption.
+
+  cost_model:
+    type: flat_annual_subscription
+    notes: UN Comtrade uses a flat annual subscription model with no per-call or per-record charges beyond the subscription fee. Free tiers are available with usage rate limits.
+
+  tiers:
+    - name: Free Preview
+      annual_cost_usd: 0
+      monthly_equivalent_usd: 0
+      best_for: Exploration, prototyping, and testing without an account
+
+    - name: Free Registered
+      annual_cost_usd: 0
+      monthly_equivalent_usd: 0
+      best_for: Researchers and developers with moderate query volumes under 500 calls per day
+
+    - name: Premium Individual
+      annual_cost_usd: 2000
+      monthly_equivalent_usd: 167
+      best_for: Individual analysts or researchers requiring bulk downloads and higher call volumes
+
+    - name: Premium Institutional Pro 1 (non-profit / academic)
+      annual_cost_usd: 6000
+      monthly_equivalent_usd: 500
+      best_for: Universities, research institutes, and NGOs needing institution-wide unlimited access
+
+    - name: Premium Institutional Pro 2 (private sector / for-profit)
+      annual_cost_usd: 12000
+      monthly_equivalent_usd: 1000
+      best_for: Commercial organizations, analytics firms, and financial data providers
+
+  cost_optimization:
+    - Use the free registered tier for development and low-volume production workloads
+    - Cache API responses locally to reduce redundant calls against daily quota
+    - Use bulk file endpoints instead of repeated individual queries for large dataset downloads
+    - Use async/batch endpoints for large extractions to maximize records per call (up to 2.5M)
+    - Restrict date range queries to minimize over-fetching; queries are limited to 12 months or 12 years per call
+    - Academic institutions should use Pro 1 pricing rather than Pro 2 to reduce costs by 50%
+
+  additional_fees:
+    - name: Re-dissemination License (Visualization/Analytics)
+      description: Fee required for active Premium Pro subscribers who wish to re-disseminate trade data publicly in visualization or analytics products
+      contact: subscriptions@un.org
+
+    - name: Re-dissemination License (Data Extraction)
+      description: Fee required for active Premium Pro subscribers who wish to re-disseminate raw or processed trade data for third-party data extraction applications
+      contact: subscriptions@un.org
+
+  procurement:
+    purchase_url: https://shop.un.org/databases
+    contact_email: subscriptions@un.org
+    trial_available: true
+    trial_contact: subscriptions@un.org

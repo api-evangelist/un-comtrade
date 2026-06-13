@@ -1,0 +1,256 @@
+name: UN Comtrade
+description: United Nations international trade statistics database with a REST API for accessing import/export data, commodity trade flows, and bilateral trade statistics. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes.
+image: https://comtradeplus.un.org/favicon.ico
+tags:
+  - Trade
+  - International Trade
+  - Import
+  - Export
+  - Statistics
+  - United Nations
+  - Economics
+  - Commodities
+  - Bilateral Trade
+  - HS Codes
+  - SITC
+url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+apis:
+  - name: UN Comtrade Data API
+    description: REST API for extracting international merchandise and services trade statistics. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Requires a free B2C account and API subscription key for full access.
+    humanURL: https://comtradedeveloper.un.org/
+    baseURL: https://comtradeapi.un.org
+    tags:
+      - Trade
+      - Import
+      - Export
+      - Commodities
+      - Bilateral Trade
+      - Statistics
+    properties:
+      - type: Documentation
+        url: https://uncomtrade.org/docs/un-comtrade-api/
+      - type: Developer Portal
+        url: https://comtradedeveloper.un.org/
+      - type: OpenAPI
+        url: https://comtradedeveloper.un.org/
+      - type: Authentication
+        url: https://uncomtrade.org/docs/api-subscription-keys/
+      - type: Plans
+        url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
+      - type: Rate Limits
+        url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
+      - type: FinOps
+        url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
+      - type: Sign Up
+        url: https://comtradeplus.un.org/
+      - type: Pricing
+        url: https://shop.un.org/databases
+      - type: Python SDK
+        url: https://github.com/uncomtrade/comtradeapicall
+      - type: R Package
+        url: https://docs.ropensci.org/comtradr/
+    contact:
+      - FN: UN Comtrade Support
+        email: comtrade@un.org
+      - FN: UN Comtrade Subscriptions
+        email: subscriptions@un.org
+    endpoints:
+      - name: Preview Final Trade Data
+        description: Preview up to 500 records of final trade data without authentication. Returns merchandise or services trade flows by reporter, partner, commodity, and period.
+        method: GET
+        path: /public/v1/preview/{typeCode}/{freqCode}/{clCode}
+        parameters:
+          - name: typeCode
+            in: path
+            required: true
+            description: "Trade type: C for Goods, S for Services"
+          - name: freqCode
+            in: path
+            required: true
+            description: "Frequency: A for Annual, M for Monthly"
+          - name: clCode
+            in: path
+            required: true
+            description: "Classification: HS, H5, H4, H3, S3, S2, S1"
+          - name: reporterCode
+            in: query
+            required: false
+            description: UN country numeric code for the reporting country
+          - name: period
+            in: query
+            required: false
+            description: "Year (YYYY) or month (YYYYMM). Multiple values comma-separated."
+          - name: cmdCode
+            in: query
+            required: false
+            description: Commodity code(s) comma-separated
+          - name: partnerCode
+            in: query
+            required: false
+            description: Partner country UN numeric code
+          - name: flowCode
+            in: query
+            required: false
+            description: "Trade flow: M=Import, X=Export, MIP=Import (in-transit), XIP=Export (in-transit)"
+          - name: maxRecords
+            in: query
+            required: false
+            description: Maximum records to return (max 500 for preview)
+          - name: format
+            in: query
+            required: false
+            description: "Response format: json (default), csv, txt"
+
+      - name: Get Final Trade Data
+        description: Extract up to 250,000 records of final trade data per call. Requires valid API subscription key.
+        method: GET
+        path: /data/v1/get/{typeCode}/{freqCode}/{clCode}
+        authentication:
+          type: apiKey
+          in: header
+          name: Ocp-Apim-Subscription-Key
+        parameters:
+          - name: typeCode
+            in: path
+            required: true
+            description: "Trade type: C for Goods, S for Services"
+          - name: freqCode
+            in: path
+            required: true
+            description: "Frequency: A for Annual, M for Monthly"
+          - name: clCode
+            in: path
+            required: true
+            description: "Classification: HS, H5, H4, H3, S3, S2, S1"
+          - name: reporterCode
+            in: query
+            required: false
+            description: UN country numeric code for the reporting country
+          - name: period
+            in: query
+            required: false
+            description: "Year (YYYY) or month (YYYYMM). Comma-separated, max 12 values."
+          - name: cmdCode
+            in: query
+            required: false
+            description: Commodity code(s) comma-separated
+          - name: partnerCode
+            in: query
+            required: false
+            description: Partner country UN numeric code
+          - name: flowCode
+            in: query
+            required: false
+            description: "Trade flow: M=Import, X=Export"
+          - name: maxRecords
+            in: query
+            required: false
+            description: Maximum records to return
+          - name: format
+            in: query
+            required: false
+            description: "Response format: json (default), csv, txt"
+
+      - name: Get Tariffline Trade Data
+        description: Extract tariffline-level trade data with full 6-digit or national commodity code detail. Requires valid API subscription key.
+        method: GET
+        path: /data/v1/getTariffline/{typeCode}/{freqCode}/{clCode}
+        authentication:
+          type: apiKey
+          in: header
+          name: Ocp-Apim-Subscription-Key
+
+      - name: Get Data Availability
+        description: Retrieve information about which reporting countries have submitted trade data for given periods and classifications.
+        method: GET
+        path: /data/v1/getDa/{typeCode}/{freqCode}/{clCode}
+        authentication:
+          type: apiKey
+          in: header
+          name: Ocp-Apim-Subscription-Key
+
+      - name: Get Data Availability for Tariffline
+        description: Retrieve data availability information specific to tariffline datasets.
+        method: GET
+        path: /data/v1/getDaTariffline/{typeCode}/{freqCode}/{clCode}
+        authentication:
+          type: apiKey
+          in: header
+          name: Ocp-Apim-Subscription-Key
+
+      - name: Get Live Updates
+        description: Retrieve information about recent data publications and updates to the UN Comtrade database.
+        method: GET
+        path: /data/v1/getLiveUpdate
+        authentication:
+          type: apiKey
+          in: header
+          name: Ocp-Apim-Subscription-Key
+
+      - name: Get Metadata
+        description: Retrieve metadata including reporter lists, partner lists, commodity codes, and classification reference data.
+        method: GET
+        path: /data/v1/getMetadata
+        authentication:
+          type: apiKey
+          in: header
+          name: Ocp-Apim-Subscription-Key
+
+      - name: Bulk Download Trade Data
+        description: Retrieve links to bulk files containing large trade datasets. Supports downloads up to 2.5M records via async processing. Requires premium subscription.
+        method: GET
+        path: /bulk/v1/get/{typeCode}/{freqCode}/{clCode}
+        authentication:
+          type: apiKey
+          in: header
+          name: Ocp-Apim-Subscription-Key
+
+      - name: Bulk Download Tariffline Data
+        description: Retrieve bulk file links for tariffline-level trade data. Requires premium subscription.
+        method: GET
+        path: /bulk/v1/getTariffline/{typeCode}/{freqCode}/{clCode}
+        authentication:
+          type: apiKey
+          in: header
+          name: Ocp-Apim-Subscription-Key
+
+      - name: Bulk Download Classic Format
+        description: Retrieve bulk files in classic UN Comtrade format for backward compatibility with legacy integrations. Requires premium subscription.
+        method: GET
+        path: /bulk/v1/getClassic/{typeCode}/{freqCode}/{clCode}
+        authentication:
+          type: apiKey
+          in: header
+          name: Ocp-Apim-Subscription-Key
+
+      - name: Get Reference Data - Country Groups
+        description: Retrieve reference data for country groups used in trade reporting and partner aggregation.
+        method: GET
+        path: /files/v1/app/reference/country_groups.json
+        authentication:
+          type: none
+
+common:
+  contact:
+    - FN: UN Comtrade Support
+      email: comtrade@un.org
+    - FN: UN Comtrade Subscriptions
+      email: subscriptions@un.org
+  links:
+    - rel: self
+      href: https://comtradeplus.un.org/
+    - rel: developer-portal
+      href: https://comtradedeveloper.un.org/
+    - rel: documentation
+      href: https://uncomtrade.org/docs/
+    - rel: pricing
+      href: https://shop.un.org/databases
+    - rel: sign-up
+      href: https://comtradeplus.un.org/
+    - rel: python-sdk
+      href: https://github.com/uncomtrade/comtradeapicall
+    - rel: r-package
+      href: https://docs.ropensci.org/comtradr/

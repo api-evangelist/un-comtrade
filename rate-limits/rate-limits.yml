@@ -1,0 +1,73 @@
+rate_limits:
+  - tier: Free Preview (unauthenticated)
+    description: No API key required. Open access for exploration with strict record limits.
+    calls_per_day: unlimited
+    calls_per_minute: not_specified
+    records_per_call: 500
+    max_async_records: null
+    authentication_required: false
+    endpoints:
+      - public/v1/preview
+      - public/v1/getMetadata
+      - public/v1/getDA
+
+  - tier: Free Registered
+    description: Requires a free UN Comtrade B2C account and API subscription key obtained via the Developer Portal.
+    calls_per_day: 500
+    calls_per_minute: not_specified
+    records_per_call: 100000
+    max_async_records: null
+    authentication_required: true
+    authentication_method: Ocp-Apim-Subscription-Key header or subscription-key query parameter
+    endpoints:
+      - data/v1/get
+      - data/v1/getTariffline
+      - data/v1/getDa
+      - data/v1/getDaTariffline
+      - data/v1/getLiveUpdate
+      - data/v1/getMetadata
+
+  - tier: Premium Individual
+    description: Paid annual subscription for individual users.
+    calls_per_day: 5000
+    calls_per_minute: not_specified
+    records_per_call: 250000
+    max_async_records: 2500000
+    authentication_required: true
+    authentication_method: Ocp-Apim-Subscription-Key header
+    endpoints:
+      - data/v1/get
+      - data/v1/getTariffline
+      - data/v1/getDa
+      - data/v1/getDaTariffline
+      - data/v1/getLiveUpdate
+      - data/v1/getMetadata
+      - bulk/v1/get
+      - bulk/v1/getTariffline
+      - bulk/v1/getClassic
+
+  - tier: Premium Institutional (Pro 1 and Pro 2)
+    description: Paid annual institutional subscription with unlimited daily query access.
+    calls_per_day: unlimited
+    calls_per_minute: not_specified
+    records_per_call: 250000
+    max_async_records: 2500000
+    authentication_required: true
+    authentication_method: Ocp-Apim-Subscription-Key header
+    endpoints:
+      - data/v1/get
+      - data/v1/getTariffline
+      - data/v1/getDa
+      - data/v1/getDaTariffline
+      - data/v1/getLiveUpdate
+      - data/v1/getMetadata
+      - bulk/v1/get
+      - bulk/v1/getTariffline
+      - bulk/v1/getClassic
+
+notes:
+  - Date range parameters are limited to 12 months or 12 years per query
+  - The API key is appended as a query parameter subscription-key or passed as the Ocp-Apim-Subscription-Key request header
+  - Keys are generated via comtradedeveloper.un.org after creating a free B2C account at comtradeplus.un.org
+  - Premium subscriptions effective October 1, 2022
+  - Contact subscriptions@un.org for institutional pricing and trial access

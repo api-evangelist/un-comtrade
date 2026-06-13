@@ -1,0 +1,100 @@
+plans:
+  - name: Free Preview
+    description: Public preview access without registration. Limited to 500 records per call with no subscription key required. Suitable for exploration and testing.
+    url: https://comtradedeveloper.un.org/
+    price: 0
+    currency: USD
+    billing_cycle: none
+    rate_limit:
+      calls_per_day: unlimited
+      records_per_call: 500
+    authentication: none
+    features:
+      - Preview final trade data
+      - Preview metadata
+      - Preview data availability
+      - No registration required
+
+  - name: Free Registered
+    description: Free registered access requiring a UN Comtrade B2C account and API subscription key. Raises record ceiling to 100,000 per call with 500 calls per day.
+    url: https://comtradedeveloper.un.org/
+    price: 0
+    currency: USD
+    billing_cycle: none
+    rate_limit:
+      calls_per_day: 500
+      records_per_call: 100000
+    authentication: api_key
+    features:
+      - Full data extraction endpoints
+      - Tariffline data access
+      - Data availability endpoints
+      - Metadata endpoints
+      - JSON, CSV, TXT response formats
+
+  - name: Premium Trial
+    description: Trial access to premium features for evaluation purposes. Contact subscriptions@un.org for details.
+    url: https://shop.un.org/databases
+    price: 0
+    currency: USD
+    billing_cycle: trial
+    rate_limit:
+      calls_per_day: 5000
+      records_per_call: 250000
+    authentication: api_key
+    features:
+      - All registered tier features
+      - Bulk download access
+      - Async (batch) download
+      - Priority preview access
+
+  - name: Premium Individual
+    description: Annual individual subscription for single-user access with 5,000 API queries per day. For internal use only.
+    url: https://shop.un.org/databases
+    price: 2000
+    currency: USD
+    billing_cycle: annual
+    rate_limit:
+      calls_per_day: 5000
+      records_per_call: 250000
+    authentication: api_key
+    features:
+      - All registered tier features
+      - Bulk file download
+      - Async (batch) download up to 2.5M records
+      - Single sign-on
+      - Internal use only
+
+  - name: Premium Institutional Pro 1
+    description: Annual institutional subscription for non-profit and academic organizations with unlimited daily queries and institution-wide access.
+    url: https://shop.un.org/databases
+    price: 6000
+    currency: USD
+    billing_cycle: annual
+    rate_limit:
+      calls_per_day: unlimited
+      records_per_call: 250000
+    authentication: api_key
+    features:
+      - All individual tier features
+      - Institution-wide access
+      - Unlimited daily queries
+      - Re-dissemination licensing available
+      - For non-profit and academic use
+
+  - name: Premium Institutional Pro 2
+    description: Annual institutional subscription for private sector and for-profit organizations with unlimited daily queries and institution-wide access.
+    url: https://shop.un.org/databases
+    price: 12000
+    currency: USD
+    billing_cycle: annual
+    rate_limit:
+      calls_per_day: unlimited
+      records_per_call: 250000
+    authentication: api_key
+    features:
+      - All individual tier features
+      - Institution-wide access
+      - Unlimited daily queries
+      - Re-dissemination licensing available
+      - For private sector and for-profit use
