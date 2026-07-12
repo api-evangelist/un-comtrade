@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyHeader
+  type: apiKey
+  in: header
+  parameter: Ocp-Apim-Subscription-Key
+  description: API subscription key obtained after registering a free B2C account at https://comtradeplus.un.org/
+    and subscribing to the relevant API product.
+  sources:
+  - openapi/openapi.yml
