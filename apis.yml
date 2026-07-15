@@ -234,6 +234,8 @@ apis:
           type: none
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/un-comtrade-agentic-access.yml
   contact:
     - FN: UN Comtrade Support
       email: comtrade@un.org

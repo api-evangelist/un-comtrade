@@ -1,0 +1,144 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 13
+  by_action_class:
+    connected: 13
+  by_consequence:
+    read: 13
+  human_in_the_loop_required: 0
+operations:
+- path: /public/v1/preview/{typeCode}/{freqCode}/{clCode}
+  method: get
+  operationId: previewFinalTradeData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /public/v1/getMetadata
+  method: get
+  operationId: previewMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /public/v1/getDA/{typeCode}/{freqCode}/{clCode}
+  method: get
+  operationId: previewDataAvailability
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data/v1/get/{typeCode}/{freqCode}/{clCode}
+  method: get
+  operationId: getFinalTradeData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data/v1/getTariffline/{typeCode}/{freqCode}/{clCode}
+  method: get
+  operationId: getTarifflineData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data/v1/getDa/{typeCode}/{freqCode}/{clCode}
+  method: get
+  operationId: getDataAvailability
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data/v1/getDaTariffline/{typeCode}/{freqCode}/{clCode}
+  method: get
+  operationId: getDataAvailabilityTariffline
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data/v1/getLiveUpdate
+  method: get
+  operationId: getLiveUpdate
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data/v1/getMetadata
+  method: get
+  operationId: getMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bulk/v1/get/{typeCode}/{freqCode}/{clCode}
+  method: get
+  operationId: bulkGetTradeData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bulk/v1/getTariffline/{typeCode}/{freqCode}/{clCode}
+  method: get
+  operationId: bulkGetTarifflineData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /bulk/v1/getClassic/{typeCode}/{freqCode}/{clCode}
+  method: get
+  operationId: bulkGetClassicData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /files/v1/app/reference/country_groups.json
+  method: get
+  operationId: getReferenceCountryGroups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
