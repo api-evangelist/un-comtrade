@@ -1,0 +1,227 @@
+openapi: 3.0.3
+info:
+  title: UN Comtrade Data Bulk Download Data Availability API
+  description: 'REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.
+
+    '
+  version: 1.0.0
+  contact:
+    name: UN Comtrade Support
+    email: comtrade@un.org
+  x-subscriptions-contact:
+    name: UN Comtrade Subscriptions
+    email: subscriptions@un.org
+  x-logo:
+    url: https://comtradeplus.un.org/favicon.ico
+  license:
+    name: UN Data Terms of Use
+    url: https://uncomtrade.org/docs/
+servers:
+- url: https://comtradeapi.un.org
+  description: UN Comtrade API Production Server
+security: []
+tags:
+- name: Data Availability
+  description: Endpoints for discovering which countries/periods have submitted data.
+paths:
+  /data/v1/getDa/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: getDataAvailability
+      summary: Get Data Availability
+      description: 'Retrieve information about which reporting countries have submitted trade data for given periods and classifications. Useful for determining what data is available before making data extraction calls.
+
+        '
+      tags:
+      - Data Availability
+      security:
+      - ApiKeyHeader: []
+      parameters:
+      - $ref: '#/components/parameters/typeCode'
+      - $ref: '#/components/parameters/freqCode'
+      - $ref: '#/components/parameters/clCode'
+      - $ref: '#/components/parameters/reporterCode'
+      - $ref: '#/components/parameters/period'
+      responses:
+        '200':
+          description: Successful data availability response
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/DataAvailabilityRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /data/v1/getDaTariffline/{typeCode}/{freqCode}/{clCode}:
+    get:
+      operationId: getDataAvailabilityTariffline
+      summary: Get Data Availability for Tariffline
+      description: 'Retrieve data availability information specific to tariffline datasets, indicating which reporters have submitted tariffline-level data for given periods and classifications.
+
+        '
+      tags:
+      - Data Availability
+      security:
+      - ApiKeyHeader: []
+      parameters:
+      - $ref: '#/components/parameters/typeCode'
+      - $ref: '#/components/parameters/freqCode'
+      - $ref: '#/components/parameters/clCode'
+      - $ref: '#/components/parameters/reporterCode'
+      - $ref: '#/components/parameters/period'
+      responses:
+        '200':
+          description: Successful tariffline data availability response
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/DataAvailabilityRecord'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+components:
+  schemas:
+    DataAvailabilityRecord:
+      type: object
+      description: Indicates whether trade data is available for a given reporter/period.
+      properties:
+        typeCode:
+          type: string
+        freqCode:
+          type: string
+        reporterCode:
+          type: integer
+        reporterISO:
+          type: string
+        reporterDesc:
+          type: string
+        period:
+          type: string
+        isOriginalClassification:
+          type: boolean
+        isPartnerDetail:
+          type: boolean
+        isCmdDetail:
+          type: boolean
+    ApiResponse:
+      type: object
+      description: Standard UN Comtrade API response envelope.
+      properties:
+        elapsedMs:
+          type: integer
+          description: Time taken to process the request in milliseconds
+        count:
+          type: integer
+          description: Number of records returned
+        data:
+          type: array
+          items: {}
+          description: Array of result records
+        error:
+          type: string
+          nullable: true
+          description: Error message if request failed
+        validationStatus:
+          type: string
+          description: Validation status of the request
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+        details:
+          type: string
+  parameters:
+    reporterCode:
+      name: reporterCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
+      example: '840'
+    clCode:
+      name: clCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - HS
+        - H5
+        - H4
+        - H3
+        - H2
+        - H1
+        - H0
+        - S4
+        - S3
+        - S2
+        - S1
+        - S0
+        - B4
+        - B3
+        - EB02
+      description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
+      example: HS
+    typeCode:
+      name: typeCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - C
+        - S
+      description: 'Trade type: C for Goods (Commodities), S for Services'
+      example: C
+    period:
+      name: period
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
+      example: '2023'
+    freqCode:
+      name: freqCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - A
+        - M
+      description: 'Reporting frequency: A for Annual, M for Monthly'
+      example: A
+  responses:
+    UnauthorizedError:
+      description: Missing or invalid API subscription key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: Ocp-Apim-Subscription-Key
+      description: 'API subscription key obtained after registering a free B2C account at https://comtradeplus.un.org/ and subscribing to the relevant API product.
+
+        '
+externalDocs:
+  description: UN Comtrade API Documentation
+  url: https://uncomtrade.org/docs/un-comtrade-api/

@@ -1,0 +1,71 @@
+openapi: 3.0.3
+info:
+  title: UN Comtrade Data Bulk Download Reference Data API
+  description: 'REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.
+
+    '
+  version: 1.0.0
+  contact:
+    name: UN Comtrade Support
+    email: comtrade@un.org
+  x-subscriptions-contact:
+    name: UN Comtrade Subscriptions
+    email: subscriptions@un.org
+  x-logo:
+    url: https://comtradeplus.un.org/favicon.ico
+  license:
+    name: UN Data Terms of Use
+    url: https://uncomtrade.org/docs/
+servers:
+- url: https://comtradeapi.un.org
+  description: UN Comtrade API Production Server
+security: []
+tags:
+- name: Reference Data
+  description: Public reference data including country groups.
+paths:
+  /files/v1/app/reference/country_groups.json:
+    get:
+      operationId: getReferenceCountryGroups
+      summary: Get Reference Data - Country Groups
+      description: 'Retrieve reference data for country groups used in trade reporting and partner aggregation. Country groups are regional or economic groupings of UN member states. No authentication required.
+
+        '
+      tags:
+      - Reference Data
+      responses:
+        '200':
+          description: Successful country groups reference response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CountryGroup'
+components:
+  schemas:
+    CountryGroup:
+      type: object
+      description: Reference data for a country grouping.
+      properties:
+        groupCode:
+          type: string
+        groupDesc:
+          type: string
+        memberCode:
+          type: integer
+        memberISO:
+          type: string
+        memberDesc:
+          type: string
+  securitySchemes:
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: Ocp-Apim-Subscription-Key
+      description: 'API subscription key obtained after registering a free B2C account at https://comtradeplus.un.org/ and subscribing to the relevant API product.
+
+        '
+externalDocs:
+  description: UN Comtrade API Documentation
+  url: https://uncomtrade.org/docs/un-comtrade-api/
