@@ -1,0 +1,24 @@
+{
+  "provider": "un-comtrade",
+  "sources": [
+    "un-comtrade-bulk-download-api-openapi.yml",
+    "un-comtrade-data-availability-api-openapi.yml",
+    "un-comtrade-final-trade-data-api-openapi.yml",
+    "un-comtrade-public-preview-api-openapi.yml",
+    "un-comtrade-reference-data-api-openapi.yml",
+    "un-comtrade-tariffline-data-api-openapi.yml"
+  ],
+  "outputs": [
+    "un-comtrade-bulk-download-api-openapi.yml",
+    "un-comtrade-data-availability-api-openapi.yml",
+    "un-comtrade-final-trade-data-api-openapi.yml",
+    "un-comtrade-public-preview-api-openapi.yml",
+    "un-comtrade-reference-data-api-openapi.yml",
+    "un-comtrade-tariffline-data-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
