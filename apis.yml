@@ -236,23 +236,23 @@ apis:
 common:
   - type: AgenticAccess
     url: agentic-access/un-comtrade-agentic-access.yml
-  contact:
-    - FN: UN Comtrade Support
-      email: comtrade@un.org
-    - FN: UN Comtrade Subscriptions
-      email: subscriptions@un.org
-  links:
-    - rel: self
-      href: https://comtradeplus.un.org/
-    - rel: developer-portal
-      href: https://comtradedeveloper.un.org/
-    - rel: documentation
-      href: https://uncomtrade.org/docs/
-    - rel: pricing
-      href: https://shop.un.org/databases
-    - rel: sign-up
-      href: https://comtradeplus.un.org/
-    - rel: python-sdk
-      href: https://github.com/uncomtrade/comtradeapicall
-    - rel: r-package
-      href: https://docs.ropensci.org/comtradr/
+contact:
+  - FN: UN Comtrade Support
+    email: comtrade@un.org
+  - FN: UN Comtrade Subscriptions
+    email: subscriptions@un.org
+links:
+  - rel: self
+    href: https://comtradeplus.un.org/
+  - rel: developer-portal
+    href: https://comtradedeveloper.un.org/
+  - rel: documentation
+    href: https://uncomtrade.org/docs/
+  - rel: pricing
+    href: https://shop.un.org/databases
+  - rel: sign-up
+    href: https://comtradeplus.un.org/
+  - rel: python-sdk
+    href: https://github.com/uncomtrade/comtradeapicall
+  - rel: r-package
+    href: https://docs.ropensci.org/comtradr/
