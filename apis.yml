@@ -16,7 +16,7 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - name: UN Comtrade Data API
     description: REST API for extracting international merchandise and services trade statistics. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Requires a free B2C account and API subscription key for full access.
