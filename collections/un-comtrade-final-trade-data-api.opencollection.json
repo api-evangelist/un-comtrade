@@ -1,0 +1,177 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UN Comtrade Data Bulk Download Final Trade Data API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Final Trade Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Final Trade Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://comtradeapi.un.org/data/v1/get/:typeCode/:freqCode/:clCode",
+            "params": [
+              {
+                "name": "typeCode",
+                "value": "C",
+                "type": "path",
+                "description": "Trade type: C for Goods (Commodities), S for Services"
+              },
+              {
+                "name": "freqCode",
+                "value": "A",
+                "type": "path",
+                "description": "Reporting frequency: A for Annual, M for Monthly"
+              },
+              {
+                "name": "clCode",
+                "value": "HS",
+                "type": "path",
+                "description": "Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)"
+              },
+              {
+                "name": "reporterCode",
+                "value": "840",
+                "type": "query",
+                "description": "UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA."
+              },
+              {
+                "name": "period",
+                "value": "2023",
+                "type": "query",
+                "description": "Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values."
+              },
+              {
+                "name": "cmdCode",
+                "value": "TOTAL",
+                "type": "query",
+                "description": "Commodity code(s), comma-separated. Use TOTAL for aggregate."
+              },
+              {
+                "name": "partnerCode",
+                "value": "0",
+                "type": "query",
+                "description": "UN M49 numeric country code for the partner country. Use 0 for World."
+              },
+              {
+                "name": "partner2Code",
+                "value": "",
+                "type": "query",
+                "description": "Secondary partner country code (used for triangular trade)."
+              },
+              {
+                "name": "flowCode",
+                "value": "X",
+                "type": "query",
+                "description": "Trade flow: M=Import, X=Export, MIP=Import in-transit, XIP=Export in-transit, MOP=Import of goods for outward processing, XOP=Export for outward processing, RM=Re-import, RX=Re-export"
+              },
+              {
+                "name": "maxRecords",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (max 250,000)"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format: json (default), csv, or txt"
+              },
+              {
+                "name": "breakdownMode",
+                "value": "",
+                "type": "query",
+                "description": "Data breakdown mode: classic (legacy columns) or plus (extended columns)"
+              },
+              {
+                "name": "includeDesc",
+                "value": "",
+                "type": "query",
+                "description": "Include commodity and country description labels in the response."
+              },
+              {
+                "name": "motCode",
+                "value": "",
+                "type": "query",
+                "description": "Mode of transport code."
+              },
+              {
+                "name": "customsCode",
+                "value": "",
+                "type": "query",
+                "description": "Customs procedure code."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Ocp-Apim-Subscription-Key",
+              "value": "{{Ocp-Apim-Subscription-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Extract up to 250,000 records of final trade data per call. Returns merchandise or services trade flows filtered by reporter, partner, commodity, period, and flow. Requires a valid API subscription key.\n"
+        },
+        {
+          "info": {
+            "name": "Get Live Updates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://comtradeapi.un.org/data/v1/getLiveUpdate",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format: json (default), csv, or txt"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Ocp-Apim-Subscription-Key",
+              "value": "{{Ocp-Apim-Subscription-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve information about recent data publications and updates to the UN Comtrade database. Useful for monitoring when new country-period data becomes available.\n"
+        },
+        {
+          "info": {
+            "name": "Get Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://comtradeapi.un.org/data/v1/getMetadata",
+            "params": [
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format: json (default), csv, or txt"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Ocp-Apim-Subscription-Key",
+              "value": "{{Ocp-Apim-Subscription-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve reference metadata including reporter country lists, partner country lists, commodity codes, and classification reference data. Used for building valid filter values for data extraction calls.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

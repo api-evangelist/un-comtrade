@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UN Comtrade Data Bulk Download API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bulk Download",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk Download Trade Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://comtradeapi.un.org/bulk/v1/get/:typeCode/:freqCode/:clCode",
+            "params": [
+              {
+                "name": "typeCode",
+                "value": "C",
+                "type": "path",
+                "description": "Trade type: C for Goods (Commodities), S for Services"
+              },
+              {
+                "name": "freqCode",
+                "value": "A",
+                "type": "path",
+                "description": "Reporting frequency: A for Annual, M for Monthly"
+              },
+              {
+                "name": "clCode",
+                "value": "HS",
+                "type": "path",
+                "description": "Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)"
+              },
+              {
+                "name": "reporterCode",
+                "value": "840",
+                "type": "query",
+                "description": "UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA."
+              },
+              {
+                "name": "period",
+                "value": "2023",
+                "type": "query",
+                "description": "Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Ocp-Apim-Subscription-Key",
+              "value": "{{Ocp-Apim-Subscription-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve links to bulk files containing large trade datasets. Supports downloads up to 2.5 million records via asynchronous processing. Returns file URLs rather than inline data. Requires a premium subscription.\n"
+        },
+        {
+          "info": {
+            "name": "Bulk Download Tariffline Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://comtradeapi.un.org/bulk/v1/getTariffline/:typeCode/:freqCode/:clCode",
+            "params": [
+              {
+                "name": "typeCode",
+                "value": "C",
+                "type": "path",
+                "description": "Trade type: C for Goods (Commodities), S for Services"
+              },
+              {
+                "name": "freqCode",
+                "value": "A",
+                "type": "path",
+                "description": "Reporting frequency: A for Annual, M for Monthly"
+              },
+              {
+                "name": "clCode",
+                "value": "HS",
+                "type": "path",
+                "description": "Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)"
+              },
+              {
+                "name": "reporterCode",
+                "value": "840",
+                "type": "query",
+                "description": "UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA."
+              },
+              {
+                "name": "period",
+                "value": "2023",
+                "type": "query",
+                "description": "Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Ocp-Apim-Subscription-Key",
+              "value": "{{Ocp-Apim-Subscription-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve bulk file links for tariffline-level trade data. Each file contains complete tariffline data for a single reporter and period. Requires a premium subscription.\n"
+        },
+        {
+          "info": {
+            "name": "Bulk Download Classic Format",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://comtradeapi.un.org/bulk/v1/getClassic/:typeCode/:freqCode/:clCode",
+            "params": [
+              {
+                "name": "typeCode",
+                "value": "C",
+                "type": "path",
+                "description": "Trade type: C for Goods (Commodities), S for Services"
+              },
+              {
+                "name": "freqCode",
+                "value": "A",
+                "type": "path",
+                "description": "Reporting frequency: A for Annual, M for Monthly"
+              },
+              {
+                "name": "clCode",
+                "value": "HS",
+                "type": "path",
+                "description": "Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)"
+              },
+              {
+                "name": "reporterCode",
+                "value": "840",
+                "type": "query",
+                "description": "UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA."
+              },
+              {
+                "name": "period",
+                "value": "2023",
+                "type": "query",
+                "description": "Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Ocp-Apim-Subscription-Key",
+              "value": "{{Ocp-Apim-Subscription-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve bulk files in classic UN Comtrade format for backward compatibility with legacy integrations and systems that rely on the original column structure. Requires a premium subscription.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

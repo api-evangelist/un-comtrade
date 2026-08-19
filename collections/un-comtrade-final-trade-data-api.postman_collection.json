@@ -1,0 +1,860 @@
+{
+  "item": [
+    {
+      "id": "02a6ed9a-2b84-4319-ab4b-c3e1834dcbff",
+      "name": "Final Trade Data",
+      "description": {
+        "content": "Authenticated endpoints for full final trade data extraction (up to 250,000 records per call).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "86ea714f-cf6f-478c-876c-381e2476cf84",
+          "name": "Get Final Trade Data",
+          "request": {
+            "name": "Get Final Trade Data",
+            "description": {
+              "content": "Extract up to 250,000 records of final trade data per call. Returns merchandise or services trade flows filtered by reporter, partner, commodity, period, and flow. Requires a valid API subscription key.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "v1",
+                "get",
+                ":typeCode",
+                ":freqCode",
+                ":clCode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "reporterCode",
+                  "value": "<string>",
+                  "description": "UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA."
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<string>",
+                  "description": "Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values."
+                },
+                {
+                  "disabled": false,
+                  "key": "cmdCode",
+                  "value": "<string>",
+                  "description": "Commodity code(s), comma-separated. Use TOTAL for aggregate."
+                },
+                {
+                  "disabled": false,
+                  "key": "partnerCode",
+                  "value": "<string>",
+                  "description": "UN M49 numeric country code for the partner country. Use 0 for World."
+                },
+                {
+                  "disabled": false,
+                  "key": "partner2Code",
+                  "value": "<string>",
+                  "description": "Secondary partner country code (used for triangular trade)."
+                },
+                {
+                  "disabled": false,
+                  "key": "flowCode",
+                  "value": "<string>",
+                  "description": "Trade flow: M=Import, X=Export, MIP=Import in-transit, XIP=Export in-transit, MOP=Import of goods for outward processing, XOP=Export for outward processing, RM=Re-import, RX=Re-export"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxRecords",
+                  "value": "<integer>",
+                  "description": "Maximum number of records to return (max 250,000)"
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format: json (default), csv, or txt"
+                },
+                {
+                  "disabled": false,
+                  "key": "breakdownMode",
+                  "value": "<string>",
+                  "description": "Data breakdown mode: classic (legacy columns) or plus (extended columns)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeDesc",
+                  "value": "true",
+                  "description": "Include commodity and country description labels in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "motCode",
+                  "value": "<string>",
+                  "description": "Mode of transport code."
+                },
+                {
+                  "disabled": false,
+                  "key": "customsCode",
+                  "value": "<string>",
+                  "description": "Customs procedure code."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "typeCode",
+                  "description": "(Required) Trade type: C for Goods (Commodities), S for Services"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "freqCode",
+                  "description": "(Required) Reporting frequency: A for Annual, M for Monthly"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clCode",
+                  "description": "(Required) Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Ocp-Apim-Subscription-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d4568a1e-a60a-4a6d-98ce-7cc371973809",
+              "name": "Successful trade data response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "get",
+                    ":typeCode",
+                    ":freqCode",
+                    ":clCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reporterCode",
+                      "value": "840"
+                    },
+                    {
+                      "key": "period",
+                      "value": "2023"
+                    },
+                    {
+                      "key": "cmdCode",
+                      "value": "TOTAL"
+                    },
+                    {
+                      "key": "partnerCode",
+                      "value": "0"
+                    },
+                    {
+                      "key": "partner2Code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "flowCode",
+                      "value": "X"
+                    },
+                    {
+                      "key": "maxRecords",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "breakdownMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeDesc",
+                      "value": "true"
+                    },
+                    {
+                      "key": "motCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customsCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "typeCode",
+                      "description": "(Required) Trade type: C for Goods (Commodities), S for Services"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "freqCode",
+                      "description": "(Required) Reporting frequency: A for Annual, M for Monthly"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clCode",
+                      "description": "(Required) Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Ocp-Apim-Subscription-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"elapsedMs\": 8884,\n  \"count\": 5039,\n  \"data\": [\n    {\n      \"typeCode\": \"string\",\n      \"freqCode\": \"string\",\n      \"refPeriodId\": 9420,\n      \"refYear\": 990,\n      \"refMonth\": 5375,\n      \"period\": \"string\",\n      \"reporterCode\": 6301,\n      \"reporterISO\": \"string\",\n      \"reporterDesc\": \"string\",\n      \"flowCode\": \"string\",\n      \"flowDesc\": \"string\",\n      \"partnerCode\": 8032,\n      \"partnerISO\": \"string\",\n      \"partnerDesc\": \"string\",\n      \"partner2Code\": 7681,\n      \"partner2ISO\": \"string\",\n      \"partner2Desc\": \"string\",\n      \"classificationCode\": \"string\",\n      \"classificationSearchCode\": \"string\",\n      \"isOriginalClassification\": false,\n      \"cmdCode\": \"string\",\n      \"cmdDesc\": \"string\",\n      \"aggrLevel\": 864,\n      \"isLeaf\": false,\n      \"customsCode\": \"string\",\n      \"customsDesc\": \"string\",\n      \"mosCode\": \"string\",\n      \"motCode\": 5990,\n      \"motDesc\": \"string\",\n      \"qtyUnitCode\": 473,\n      \"qtyUnitAbbr\": \"string\",\n      \"qty\": 7470.463573970352,\n      \"isQtyEstimated\": false,\n      \"altQtyUnitCode\": 662,\n      \"altQtyUnitAbbr\": \"string\",\n      \"altQty\": 149.737894153692,\n      \"isAltQtyEstimated\": false,\n      \"netWgt\": 788.8433714655274,\n      \"isNetWgtEstimated\": false,\n      \"grossWgt\": 1493.1052619175134,\n      \"isGrossWgtEstimated\": false,\n      \"cifvalue\": 9749.15549471753,\n      \"fobvalue\": 4026.7498052658843,\n      \"primaryValue\": 9225.103333777792,\n      \"legacyEstimationFlag\": 4641,\n      \"isReported\": true,\n      \"isAggrAbove\": false\n    },\n    {\n      \"typeCode\": \"string\",\n      \"freqCode\": \"string\",\n      \"refPeriodId\": 3301,\n      \"refYear\": 4231,\n      \"refMonth\": 9856,\n      \"period\": \"string\",\n      \"reporterCode\": 9982,\n      \"reporterISO\": \"string\",\n      \"reporterDesc\": \"string\",\n      \"flowCode\": \"string\",\n      \"flowDesc\": \"string\",\n      \"partnerCode\": 7930,\n      \"partnerISO\": \"string\",\n      \"partnerDesc\": \"string\",\n      \"partner2Code\": 1815,\n      \"partner2ISO\": \"string\",\n      \"partner2Desc\": \"string\",\n      \"classificationCode\": \"string\",\n      \"classificationSearchCode\": \"string\",\n      \"isOriginalClassification\": false,\n      \"cmdCode\": \"string\",\n      \"cmdDesc\": \"string\",\n      \"aggrLevel\": 4754,\n      \"isLeaf\": true,\n      \"customsCode\": \"string\",\n      \"customsDesc\": \"string\",\n      \"mosCode\": \"string\",\n      \"motCode\": 4246,\n      \"motDesc\": \"string\",\n      \"qtyUnitCode\": 2056,\n      \"qtyUnitAbbr\": \"string\",\n      \"qty\": 2263.0191023516586,\n      \"isQtyEstimated\": true,\n      \"altQtyUnitCode\": 5299,\n      \"altQtyUnitAbbr\": \"string\",\n      \"altQty\": 9924.627386468599,\n      \"isAltQtyEstimated\": true,\n      \"netWgt\": 6073.878876833609,\n      \"isNetWgtEstimated\": false,\n      \"grossWgt\": 7602.357653124175,\n      \"isGrossWgtEstimated\": false,\n      \"cifvalue\": 9836.098138837086,\n      \"fobvalue\": 4327.732638491077,\n      \"primaryValue\": 2992.501475001801,\n      \"legacyEstimationFlag\": 1385,\n      \"isReported\": true,\n      \"isAggrAbove\": true\n    }\n  ],\n  \"error\": \"string\",\n  \"validationStatus\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a943cde-7c3f-4143-bba2-f49068dad079",
+              "name": "Missing or invalid API subscription key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "get",
+                    ":typeCode",
+                    ":freqCode",
+                    ":clCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reporterCode",
+                      "value": "840"
+                    },
+                    {
+                      "key": "period",
+                      "value": "2023"
+                    },
+                    {
+                      "key": "cmdCode",
+                      "value": "TOTAL"
+                    },
+                    {
+                      "key": "partnerCode",
+                      "value": "0"
+                    },
+                    {
+                      "key": "partner2Code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "flowCode",
+                      "value": "X"
+                    },
+                    {
+                      "key": "maxRecords",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "breakdownMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeDesc",
+                      "value": "true"
+                    },
+                    {
+                      "key": "motCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customsCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "typeCode",
+                      "description": "(Required) Trade type: C for Goods (Commodities), S for Services"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "freqCode",
+                      "description": "(Required) Reporting frequency: A for Annual, M for Monthly"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clCode",
+                      "description": "(Required) Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Ocp-Apim-Subscription-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 280,\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a4c66f1-2e11-4ea8-aad9-04b921bd3ffa",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "get",
+                    ":typeCode",
+                    ":freqCode",
+                    ":clCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "reporterCode",
+                      "value": "840"
+                    },
+                    {
+                      "key": "period",
+                      "value": "2023"
+                    },
+                    {
+                      "key": "cmdCode",
+                      "value": "TOTAL"
+                    },
+                    {
+                      "key": "partnerCode",
+                      "value": "0"
+                    },
+                    {
+                      "key": "partner2Code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "flowCode",
+                      "value": "X"
+                    },
+                    {
+                      "key": "maxRecords",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "breakdownMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeDesc",
+                      "value": "true"
+                    },
+                    {
+                      "key": "motCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customsCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "typeCode",
+                      "description": "(Required) Trade type: C for Goods (Commodities), S for Services"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "freqCode",
+                      "description": "(Required) Reporting frequency: A for Annual, M for Monthly"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clCode",
+                      "description": "(Required) Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Ocp-Apim-Subscription-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 280,\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0654d5f0-2b33-415b-ba21-9d000980e311",
+          "name": "Get Live Updates",
+          "request": {
+            "name": "Get Live Updates",
+            "description": {
+              "content": "Retrieve information about recent data publications and updates to the UN Comtrade database. Useful for monitoring when new country-period data becomes available.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "v1",
+                "getLiveUpdate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format: json (default), csv, or txt"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Ocp-Apim-Subscription-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "32d0b9bf-9954-460b-872d-6c80a75b948a",
+              "name": "Successful live update response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "getLiveUpdate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Ocp-Apim-Subscription-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"elapsedMs\": 3961,\n  \"count\": 3712,\n  \"data\": [\n    {\n      \"typeCode\": \"string\",\n      \"freqCode\": \"string\",\n      \"classificationCode\": \"string\",\n      \"reporterCode\": 1557,\n      \"reporterISO\": \"string\",\n      \"reporterDesc\": \"string\",\n      \"period\": \"string\",\n      \"publishedDate\": \"1947-08-05T05:46:17.312Z\"\n    },\n    {\n      \"typeCode\": \"string\",\n      \"freqCode\": \"string\",\n      \"classificationCode\": \"string\",\n      \"reporterCode\": 6755,\n      \"reporterISO\": \"string\",\n      \"reporterDesc\": \"string\",\n      \"period\": \"string\",\n      \"publishedDate\": \"1983-07-28T03:58:43.628Z\"\n    }\n  ],\n  \"error\": \"string\",\n  \"validationStatus\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6848fcd9-ef35-4d18-b830-9f9d77b62190",
+              "name": "Missing or invalid API subscription key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "getLiveUpdate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Ocp-Apim-Subscription-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 280,\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9104e6ab-9fd0-4386-9aea-79ed5066589e",
+          "name": "Get Metadata",
+          "request": {
+            "name": "Get Metadata",
+            "description": {
+              "content": "Retrieve reference metadata including reporter country lists, partner country lists, commodity codes, and classification reference data. Used for building valid filter values for data extraction calls.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "v1",
+                "getMetadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format: json (default), csv, or txt"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Ocp-Apim-Subscription-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "88cd65ef-1a45-469e-ac6c-64ebb2b05cdf",
+              "name": "Successful metadata response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "getMetadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Ocp-Apim-Subscription-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"elapsedMs\": 638,\n  \"count\": 3833,\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"text\": \"string\",\n      \"parent\": \"string\",\n      \"isLeaf\": false,\n      \"aggLevel\": 5676\n    },\n    {\n      \"id\": \"string\",\n      \"text\": \"string\",\n      \"parent\": \"string\",\n      \"isLeaf\": false,\n      \"aggLevel\": 2685\n    }\n  ],\n  \"error\": \"string\",\n  \"validationStatus\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13d9322a-552c-43c5-a778-3744bbd0a441",
+              "name": "Missing or invalid API subscription key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v1",
+                    "getMetadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "json"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Ocp-Apim-Subscription-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 280,\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://comtradeapi.un.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f529eefc-132f-472b-a574-c0872dabe87e",
+    "name": "UN Comtrade Data Bulk Download Final Trade Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.\n\n\nContact Support:\n Name: UN Comtrade Support\n Email: comtrade@un.org",
+      "type": "text/plain"
+    }
+  }
+}

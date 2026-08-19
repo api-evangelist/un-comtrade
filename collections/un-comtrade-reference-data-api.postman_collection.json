@@ -1,0 +1,110 @@
+{
+  "item": [
+    {
+      "id": "6c348185-4f52-471c-8963-a698bc2f7292",
+      "name": "Reference Data",
+      "description": {
+        "content": "Public reference data including country groups.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "caced816-48c0-478e-b3e5-5d4a5d04ef7b",
+          "name": "Get Reference Data - Country Groups",
+          "request": {
+            "name": "Get Reference Data - Country Groups",
+            "description": {
+              "content": "Retrieve reference data for country groups used in trade reporting and partner aggregation. Country groups are regional or economic groupings of UN member states. No authentication required.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "files",
+                "v1",
+                "app",
+                "reference",
+                "country_groups.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "66341b83-750e-49f3-998e-f8720cdff5c8",
+              "name": "Successful country groups reference response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "files",
+                    "v1",
+                    "app",
+                    "reference",
+                    "country_groups.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"groupCode\": \"string\",\n    \"groupDesc\": \"string\",\n    \"memberCode\": 1391,\n    \"memberISO\": \"string\",\n    \"memberDesc\": \"string\"\n  },\n  {\n    \"groupCode\": \"string\",\n    \"groupDesc\": \"string\",\n    \"memberCode\": 2231,\n    \"memberISO\": \"string\",\n    \"memberDesc\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://comtradeapi.un.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "100b911d-81a7-4161-8cf3-c1cbd7e6a03c",
+    "name": "UN Comtrade Data Bulk Download Reference Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.\n\n\nContact Support:\n Name: UN Comtrade Support\n Email: comtrade@un.org",
+      "type": "text/plain"
+    }
+  }
+}
