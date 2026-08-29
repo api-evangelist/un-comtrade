@@ -1,5 +1,17 @@
 name: UN Comtrade
 description: United Nations international trade statistics database with a REST API for accessing import/export data, commodity trade flows, and bilateral trade statistics. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://comtradeplus.un.org/favicon.ico
 tags:
   - Trade
