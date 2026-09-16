@@ -1,5 +1,8 @@
 name: UN Comtrade
-description: United Nations international trade statistics database with a REST API for accessing import/export data, commodity trade flows, and bilateral trade statistics. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes.
+description: United Nations international trade statistics database with a REST API for accessing import/export
+  data, commodity trade flows, and bilateral trade statistics. Covers over 200 reporting countries and
+  territories with data spanning goods and services trade classified by HS, SITC, and other commodity
+  codes.
 deliveryModel:
   model: saas
   open_source: false
@@ -28,20 +31,20 @@ accessModel:
   method: derived
 image: https://comtradeplus.un.org/favicon.ico
 tags:
-  - Trade
-  - International Trade
-  - Import
-  - Export
-  - Statistics
-  - United Nations
-  - Economics
-  - Commodities
-  - Bilateral Trade
-  - HS Codes
-  - SITC
+- Trade
+- International Trade
+- Import
+- Export
+- Statistics
+- United Nations
+- Economics
+- Commodities
+- Bilateral Trade
+- HS Codes
+- SITC
 url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - aid: un-comtrade:un-comtrade-bulk-download-api
@@ -61,14 +64,11 @@ apis:
   - type: Authentication
     url: https://uncomtrade.org/docs/api-subscription-keys/
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
   - type: Signup
     url: https://comtradeplus.un.org/
   - type: Pricing
@@ -94,14 +94,11 @@ apis:
   - type: Authentication
     url: https://uncomtrade.org/docs/api-subscription-keys/
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
   - type: Signup
     url: https://comtradeplus.un.org/
   - type: Pricing
@@ -112,8 +109,8 @@ apis:
     url: https://docs.ropensci.org/comtradr/
 - aid: un-comtrade:un-comtrade-final-trade-data-api
   name: UN Comtrade Final Trade Data API
-  description: >-
-    Authenticated endpoints for full final trade data extraction (up to 250,000 records per call).
+  description: Authenticated endpoints for full final trade data extraction (up to 250,000 records per
+    call).
   humanURL: https://comtradedeveloper.un.org/
   baseURL: https://comtradeapi.un.org
   tags:
@@ -128,14 +125,11 @@ apis:
   - type: Authentication
     url: https://uncomtrade.org/docs/api-subscription-keys/
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
   - type: Signup
     url: https://comtradeplus.un.org/
   - type: Pricing
@@ -161,14 +155,11 @@ apis:
   - type: Authentication
     url: https://uncomtrade.org/docs/api-subscription-keys/
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
   - type: Signup
     url: https://comtradeplus.un.org/
   - type: Pricing
@@ -194,14 +185,11 @@ apis:
   - type: Authentication
     url: https://uncomtrade.org/docs/api-subscription-keys/
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
   - type: Signup
     url: https://comtradeplus.un.org/
   - type: Pricing
@@ -227,14 +215,11 @@ apis:
   - type: Authentication
     url: https://uncomtrade.org/docs/api-subscription-keys/
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/un-comtrade/refs/heads/main/finops/finops.yml
   - type: Signup
     url: https://comtradeplus.un.org/
   - type: Pricing
@@ -244,25 +229,27 @@ apis:
   - type: R Package
     url: https://docs.ropensci.org/comtradr/
 common:
-  - type: AgenticAccess
-    url: agentic-access/un-comtrade-agentic-access.yml
+- type: Website
+  url: https://un.org
+- type: AgenticAccess
+  url: agentic-access/un-comtrade-agentic-access.yml
 contact:
-  - FN: UN Comtrade Support
-    email: comtrade@un.org
-  - FN: UN Comtrade Subscriptions
-    email: subscriptions@un.org
+- FN: UN Comtrade Support
+  email: comtrade@un.org
+- FN: UN Comtrade Subscriptions
+  email: subscriptions@un.org
 links:
-  - rel: self
-    href: https://comtradeplus.un.org/
-  - rel: developer-portal
-    href: https://comtradedeveloper.un.org/
-  - rel: documentation
-    href: https://uncomtrade.org/docs/
-  - rel: pricing
-    href: https://shop.un.org/databases
-  - rel: sign-up
-    href: https://comtradeplus.un.org/
-  - rel: python-sdk
-    href: https://github.com/uncomtrade/comtradeapicall
-  - rel: r-package
-    href: https://docs.ropensci.org/comtradr/
+- rel: self
+  href: https://comtradeplus.un.org/
+- rel: developer-portal
+  href: https://comtradedeveloper.un.org/
+- rel: documentation
+  href: https://uncomtrade.org/docs/
+- rel: pricing
+  href: https://shop.un.org/databases
+- rel: sign-up
+  href: https://comtradeplus.un.org/
+- rel: python-sdk
+  href: https://github.com/uncomtrade/comtradeapicall
+- rel: r-package
+  href: https://docs.ropensci.org/comtradr/
