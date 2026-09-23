@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: UN Comtrade Data Bulk Download API
-  description: 'REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.
-
-    '
+  description: REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.
   version: 1.0.0
   contact:
     name: UN Comtrade Support
@@ -28,9 +26,7 @@ paths:
     get:
       operationId: bulkGetTradeData
       summary: Bulk Download Trade Data
-      description: 'Retrieve links to bulk files containing large trade datasets. Supports downloads up to 2.5 million records via asynchronous processing. Returns file URLs rather than inline data. Requires a premium subscription.
-
-        '
+      description: Retrieve links to bulk files containing large trade datasets. Supports downloads up to 2.5 million records via asynchronous processing. Returns file URLs rather than inline data. Requires a premium subscription.
       tags:
       - Bulk Download
       security:
@@ -63,9 +59,7 @@ paths:
     get:
       operationId: bulkGetTarifflineData
       summary: Bulk Download Tariffline Data
-      description: 'Retrieve bulk file links for tariffline-level trade data. Each file contains complete tariffline data for a single reporter and period. Requires a premium subscription.
-
-        '
+      description: Retrieve bulk file links for tariffline-level trade data. Each file contains complete tariffline data for a single reporter and period. Requires a premium subscription.
       tags:
       - Bulk Download
       security:
@@ -98,9 +92,7 @@ paths:
     get:
       operationId: bulkGetClassicData
       summary: Bulk Download Classic Format
-      description: 'Retrieve bulk files in classic UN Comtrade format for backward compatibility with legacy integrations and systems that rely on the original column structure. Requires a premium subscription.
-
-        '
+      description: Retrieve bulk files in classic UN Comtrade format for backward compatibility with legacy integrations and systems that rely on the original column structure. Requires a premium subscription.
       tags:
       - Bulk Download
       security:
@@ -130,7 +122,92 @@ paths:
         '403':
           description: Premium subscription required for bulk access
 components:
+  parameters:
+    freqCode:
+      name: freqCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - A
+        - M
+      description: 'Reporting frequency: A for Annual, M for Monthly'
+      example: A
+    reporterCode:
+      name: reporterCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
+      example: '840'
+    period:
+      name: period
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
+      example: '2023'
+    typeCode:
+      name: typeCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - C
+        - S
+      description: 'Trade type: C for Goods (Commodities), S for Services'
+      example: C
+    clCode:
+      name: clCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - HS
+        - H5
+        - H4
+        - H3
+        - H2
+        - H1
+        - H0
+        - S4
+        - S3
+        - S2
+        - S1
+        - S0
+        - B4
+        - B3
+        - EB02
+      description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
+      example: HS
   schemas:
+    ApiResponse:
+      type: object
+      description: Standard UN Comtrade API response envelope.
+      properties:
+        elapsedMs:
+          type: integer
+          description: Time taken to process the request in milliseconds
+        count:
+          type: integer
+          description: Number of records returned
+        data:
+          type: array
+          items: {}
+          description: Array of result records
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message if request failed
+        validationStatus:
+          type: string
+          description: Validation status of the request
     BulkFileRecord:
       type: object
       description: Bulk file download reference.
@@ -157,27 +234,6 @@ components:
         publishedDate:
           type: string
           format: date-time
-    ApiResponse:
-      type: object
-      description: Standard UN Comtrade API response envelope.
-      properties:
-        elapsedMs:
-          type: integer
-          description: Time taken to process the request in milliseconds
-        count:
-          type: integer
-          description: Number of records returned
-        data:
-          type: array
-          items: {}
-          description: Array of result records
-        error:
-          type: string
-          nullable: true
-          description: Error message if request failed
-        validationStatus:
-          type: string
-          description: Validation status of the request
     Error:
       type: object
       properties:
@@ -187,69 +243,6 @@ components:
           type: string
         details:
           type: string
-  parameters:
-    reporterCode:
-      name: reporterCode
-      in: query
-      required: false
-      schema:
-        type: string
-      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
-      example: '840'
-    clCode:
-      name: clCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - HS
-        - H5
-        - H4
-        - H3
-        - H2
-        - H1
-        - H0
-        - S4
-        - S3
-        - S2
-        - S1
-        - S0
-        - B4
-        - B3
-        - EB02
-      description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
-      example: HS
-    typeCode:
-      name: typeCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - C
-        - S
-      description: 'Trade type: C for Goods (Commodities), S for Services'
-      example: C
-    period:
-      name: period
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
-      example: '2023'
-    freqCode:
-      name: freqCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - A
-        - M
-      description: 'Reporting frequency: A for Annual, M for Monthly'
-      example: A
   responses:
     UnauthorizedError:
       description: Missing or invalid API subscription key

@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: UN Comtrade Data Bulk Download Reference Data API
-  description: 'REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.
-
-    '
+  title: UN Comtrade Data Reference Data API
+  description: REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.
   version: 1.0.0
   contact:
     name: UN Comtrade Support
@@ -28,9 +26,7 @@ paths:
     get:
       operationId: getReferenceCountryGroups
       summary: Get Reference Data - Country Groups
-      description: 'Retrieve reference data for country groups used in trade reporting and partner aggregation. Country groups are regional or economic groupings of UN member states. No authentication required.
-
-        '
+      description: Retrieve reference data for country groups used in trade reporting and partner aggregation. Country groups are regional or economic groupings of UN member states. No authentication required.
       tags:
       - Reference Data
       responses:

@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: UN Comtrade Data Bulk Download Tariffline Data API
-  description: 'REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.
-
-    '
+  title: UN Comtrade Data Tariffline Data API
+  description: REST API for extracting international merchandise and services trade statistics from the United Nations Comtrade database. Provides access to final trade data, tariffline data, data availability, metadata, live updates, and bulk file downloads. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes. Requires a free B2C account and API subscription key for full access.
   version: 1.0.0
   contact:
     name: UN Comtrade Support
@@ -28,9 +26,7 @@ paths:
     get:
       operationId: getTarifflineData
       summary: Get Tariffline Trade Data
-      description: 'Extract tariffline-level trade data with full 6-digit HS or national commodity code detail. Provides more granular breakdown than final aggregated data. Requires a valid API subscription key.
-
-        '
+      description: Extract tariffline-level trade data with full 6-digit HS or national commodity code detail. Provides more granular breakdown than final aggregated data. Requires a valid API subscription key.
       tags:
       - Tariffline Data
       security:
@@ -54,6 +50,122 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequestsError'
 components:
+  parameters:
+    freqCode:
+      name: freqCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - A
+        - M
+      description: 'Reporting frequency: A for Annual, M for Monthly'
+      example: A
+    reporterCode:
+      name: reporterCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
+      example: '840'
+    flowCode:
+      name: flowCode
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - M
+        - X
+        - MIP
+        - XIP
+        - MOP
+        - XOP
+        - RM
+        - RX
+      description: 'Trade flow: M=Import, X=Export, MIP=Import in-transit, XIP=Export in-transit, MOP=Import of goods for outward processing, XOP=Export for outward processing, RM=Re-import, RX=Re-export'
+      example: X
+    format:
+      name: format
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - txt
+        default: json
+      description: 'Response format: json (default), csv, or txt'
+    period:
+      name: period
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
+      example: '2023'
+    includeDesc:
+      name: includeDesc
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: true
+      description: Include commodity and country description labels in the response.
+    typeCode:
+      name: typeCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - C
+        - S
+      description: 'Trade type: C for Goods (Commodities), S for Services'
+      example: C
+    clCode:
+      name: clCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - HS
+        - H5
+        - H4
+        - H3
+        - H2
+        - H1
+        - H0
+        - S4
+        - S3
+        - S2
+        - S1
+        - S0
+        - B4
+        - B3
+        - EB02
+      description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
+      example: HS
+    cmdCode:
+      name: cmdCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Commodity code(s), comma-separated. Use TOTAL for aggregate.
+      example: TOTAL
+    partnerCode:
+      name: partnerCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: UN M49 numeric country code for the partner country. Use 0 for World.
+      example: '0'
   schemas:
     ApiResponse:
       type: object
@@ -70,12 +182,22 @@ components:
           items: {}
           description: Array of result records
         error:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Error message if request failed
         validationStatus:
           type: string
           description: Validation status of the request
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+        details:
+          type: string
     TradeRecord:
       type: object
       description: A single international trade data record.
@@ -221,131 +343,6 @@ components:
         isAggrAbove:
           type: boolean
           description: Whether values are aggregated above requested level
-    Error:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        message:
-          type: string
-        details:
-          type: string
-  parameters:
-    includeDesc:
-      name: includeDesc
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: true
-      description: Include commodity and country description labels in the response.
-    partnerCode:
-      name: partnerCode
-      in: query
-      required: false
-      schema:
-        type: string
-      description: UN M49 numeric country code for the partner country. Use 0 for World.
-      example: '0'
-    reporterCode:
-      name: reporterCode
-      in: query
-      required: false
-      schema:
-        type: string
-      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
-      example: '840'
-    clCode:
-      name: clCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - HS
-        - H5
-        - H4
-        - H3
-        - H2
-        - H1
-        - H0
-        - S4
-        - S3
-        - S2
-        - S1
-        - S0
-        - B4
-        - B3
-        - EB02
-      description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
-      example: HS
-    typeCode:
-      name: typeCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - C
-        - S
-      description: 'Trade type: C for Goods (Commodities), S for Services'
-      example: C
-    period:
-      name: period
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
-      example: '2023'
-    flowCode:
-      name: flowCode
-      in: query
-      required: false
-      schema:
-        type: string
-        enum:
-        - M
-        - X
-        - MIP
-        - XIP
-        - MOP
-        - XOP
-        - RM
-        - RX
-      description: 'Trade flow: M=Import, X=Export, MIP=Import in-transit, XIP=Export in-transit, MOP=Import of goods for outward processing, XOP=Export for outward processing, RM=Re-import, RX=Re-export'
-      example: X
-    format:
-      name: format
-      in: query
-      required: false
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - txt
-        default: json
-      description: 'Response format: json (default), csv, or txt'
-    cmdCode:
-      name: cmdCode
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Commodity code(s), comma-separated. Use TOTAL for aggregate.
-      example: TOTAL
-    freqCode:
-      name: freqCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - A
-        - M
-      description: 'Reporting frequency: A for Annual, M for Monthly'
-      example: A
   responses:
     TradeDataResponse:
       description: Successful trade data response
@@ -366,14 +363,14 @@ components:
         text/plain:
           schema:
             type: string
-    TooManyRequestsError:
-      description: Rate limit exceeded
+    UnauthorizedError:
+      description: Missing or invalid API subscription key
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    UnauthorizedError:
-      description: Missing or invalid API subscription key
+    TooManyRequestsError:
+      description: Rate limit exceeded
       content:
         application/json:
           schema:
