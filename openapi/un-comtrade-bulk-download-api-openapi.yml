@@ -123,44 +123,6 @@ paths:
           description: Premium subscription required for bulk access
 components:
   parameters:
-    freqCode:
-      name: freqCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - A
-        - M
-      description: 'Reporting frequency: A for Annual, M for Monthly'
-      example: A
-    reporterCode:
-      name: reporterCode
-      in: query
-      required: false
-      schema:
-        type: string
-      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
-      example: '840'
-    period:
-      name: period
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
-      example: '2023'
-    typeCode:
-      name: typeCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - C
-        - S
-      description: 'Trade type: C for Goods (Commodities), S for Services'
-      example: C
     clCode:
       name: clCode
       in: path
@@ -185,29 +147,45 @@ components:
         - EB02
       description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
       example: HS
+    freqCode:
+      name: freqCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - A
+        - M
+      description: 'Reporting frequency: A for Annual, M for Monthly'
+      example: A
+    typeCode:
+      name: typeCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - C
+        - S
+      description: 'Trade type: C for Goods (Commodities), S for Services'
+      example: C
+    period:
+      name: period
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
+      example: '2023'
+    reporterCode:
+      name: reporterCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
+      example: '840'
   schemas:
-    ApiResponse:
-      type: object
-      description: Standard UN Comtrade API response envelope.
-      properties:
-        elapsedMs:
-          type: integer
-          description: Time taken to process the request in milliseconds
-        count:
-          type: integer
-          description: Number of records returned
-        data:
-          type: array
-          items: {}
-          description: Array of result records
-        error:
-          type:
-          - string
-          - 'null'
-          description: Error message if request failed
-        validationStatus:
-          type: string
-          description: Validation status of the request
     BulkFileRecord:
       type: object
       description: Bulk file download reference.
@@ -234,6 +212,28 @@ components:
         publishedDate:
           type: string
           format: date-time
+    ApiResponse:
+      type: object
+      description: Standard UN Comtrade API response envelope.
+      properties:
+        elapsedMs:
+          type: integer
+          description: Time taken to process the request in milliseconds
+        count:
+          type: integer
+          description: Number of records returned
+        data:
+          type: array
+          items: {}
+          description: Array of result records
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message if request failed
+        validationStatus:
+          type: string
+          description: Validation status of the request
     Error:
       type: object
       properties:
