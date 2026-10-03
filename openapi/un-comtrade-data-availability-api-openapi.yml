@@ -85,69 +85,6 @@ paths:
         '401':
           $ref: '#/components/responses/UnauthorizedError'
 components:
-  parameters:
-    clCode:
-      name: clCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - HS
-        - H5
-        - H4
-        - H3
-        - H2
-        - H1
-        - H0
-        - S4
-        - S3
-        - S2
-        - S1
-        - S0
-        - B4
-        - B3
-        - EB02
-      description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
-      example: HS
-    freqCode:
-      name: freqCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - A
-        - M
-      description: 'Reporting frequency: A for Annual, M for Monthly'
-      example: A
-    typeCode:
-      name: typeCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - C
-        - S
-      description: 'Trade type: C for Goods (Commodities), S for Services'
-      example: C
-    period:
-      name: period
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
-      example: '2023'
-    reporterCode:
-      name: reporterCode
-      in: query
-      required: false
-      schema:
-        type: string
-      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
-      example: '840'
   schemas:
     ApiResponse:
       type: object
@@ -202,6 +139,69 @@ components:
           type: string
         details:
           type: string
+  parameters:
+    freqCode:
+      name: freqCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - A
+        - M
+      description: 'Reporting frequency: A for Annual, M for Monthly'
+      example: A
+    reporterCode:
+      name: reporterCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
+      example: '840'
+    typeCode:
+      name: typeCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - C
+        - S
+      description: 'Trade type: C for Goods (Commodities), S for Services'
+      example: C
+    period:
+      name: period
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
+      example: '2023'
+    clCode:
+      name: clCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - HS
+        - H5
+        - H4
+        - H3
+        - H2
+        - H1
+        - H0
+        - S4
+        - S3
+        - S2
+        - S1
+        - S0
+        - B4
+        - B3
+        - EB02
+      description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
+      example: HS
   responses:
     UnauthorizedError:
       description: Missing or invalid API subscription key
