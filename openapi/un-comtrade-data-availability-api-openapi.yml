@@ -85,99 +85,7 @@ paths:
         '401':
           $ref: '#/components/responses/UnauthorizedError'
 components:
-  schemas:
-    ApiResponse:
-      type: object
-      description: Standard UN Comtrade API response envelope.
-      properties:
-        elapsedMs:
-          type: integer
-          description: Time taken to process the request in milliseconds
-        count:
-          type: integer
-          description: Number of records returned
-        data:
-          type: array
-          items: {}
-          description: Array of result records
-        error:
-          type:
-          - string
-          - 'null'
-          description: Error message if request failed
-        validationStatus:
-          type: string
-          description: Validation status of the request
-    DataAvailabilityRecord:
-      type: object
-      description: Indicates whether trade data is available for a given reporter/period.
-      properties:
-        typeCode:
-          type: string
-        freqCode:
-          type: string
-        reporterCode:
-          type: integer
-        reporterISO:
-          type: string
-        reporterDesc:
-          type: string
-        period:
-          type: string
-        isOriginalClassification:
-          type: boolean
-        isPartnerDetail:
-          type: boolean
-        isCmdDetail:
-          type: boolean
-    Error:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        message:
-          type: string
-        details:
-          type: string
   parameters:
-    freqCode:
-      name: freqCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - A
-        - M
-      description: 'Reporting frequency: A for Annual, M for Monthly'
-      example: A
-    reporterCode:
-      name: reporterCode
-      in: query
-      required: false
-      schema:
-        type: string
-      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
-      example: '840'
-    typeCode:
-      name: typeCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - C
-        - S
-      description: 'Trade type: C for Goods (Commodities), S for Services'
-      example: C
-    period:
-      name: period
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
-      example: '2023'
     clCode:
       name: clCode
       in: path
@@ -202,6 +110,44 @@ components:
         - EB02
       description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
       example: HS
+    typeCode:
+      name: typeCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - C
+        - S
+      description: 'Trade type: C for Goods (Commodities), S for Services'
+      example: C
+    period:
+      name: period
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
+      example: '2023'
+    freqCode:
+      name: freqCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - A
+        - M
+      description: 'Reporting frequency: A for Annual, M for Monthly'
+      example: A
+    reporterCode:
+      name: reporterCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
+      example: '840'
   responses:
     UnauthorizedError:
       description: Missing or invalid API subscription key
@@ -209,6 +155,60 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+        details:
+          type: string
+    DataAvailabilityRecord:
+      type: object
+      description: Indicates whether trade data is available for a given reporter/period.
+      properties:
+        typeCode:
+          type: string
+        freqCode:
+          type: string
+        reporterCode:
+          type: integer
+        reporterISO:
+          type: string
+        reporterDesc:
+          type: string
+        period:
+          type: string
+        isOriginalClassification:
+          type: boolean
+        isPartnerDetail:
+          type: boolean
+        isCmdDetail:
+          type: boolean
+    ApiResponse:
+      type: object
+      description: Standard UN Comtrade API response envelope.
+      properties:
+        elapsedMs:
+          type: integer
+          description: Time taken to process the request in milliseconds
+        count:
+          type: integer
+          description: Number of records returned
+        data:
+          type: array
+          items: {}
+          description: Array of result records
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message if request failed
+        validationStatus:
+          type: string
+          description: Validation status of the request
   securitySchemes:
     ApiKeyHeader:
       type: apiKey
