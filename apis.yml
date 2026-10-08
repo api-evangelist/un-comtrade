@@ -229,6 +229,12 @@ apis:
   - type: R Package
     url: https://docs.ropensci.org/comtradr/
 common:
+- type: Plans
+  url: plans/plans.yml
+- type: RateLimits
+  url: rate-limits/rate-limits.yml
+- type: FinOps
+  url: finops/finops.yml
 - type: Website
   url: https://un.org
 - type: AgenticAccess
