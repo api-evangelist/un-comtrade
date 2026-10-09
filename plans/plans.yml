@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 plans:
   - name: Free Preview
     description: Public preview access without registration. Limited to 500 records per call with no subscription key required. Suitable for exploration and testing.
@@ -98,3 +102,47 @@ plans:
       - Unlimited daily queries
       - Re-dissemination licensing available
       - For private sector and for-profit use
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Free Preview
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Free Registered
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Premium Trial
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Premium Individual
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Premium Institutional Pro 1
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Premium Institutional Pro 2
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
