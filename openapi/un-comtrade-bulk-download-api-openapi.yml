@@ -123,6 +123,14 @@ paths:
           description: Premium subscription required for bulk access
 components:
   parameters:
+    reporterCode:
+      name: reporterCode
+      in: query
+      required: false
+      schema:
+        type: string
+      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
+      example: '840'
     clCode:
       name: clCode
       in: path
@@ -147,6 +155,17 @@ components:
         - EB02
       description: 'Commodity classification code: HS (latest), H5–H0 (HS revisions), S4–S0 (SITC revisions), B4/B3 (BEC), EB02 (Extended BEC)'
       example: HS
+    freqCode:
+      name: freqCode
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - A
+        - M
+      description: 'Reporting frequency: A for Annual, M for Monthly'
+      example: A
     typeCode:
       name: typeCode
       in: path
@@ -166,25 +185,6 @@ components:
         type: string
       description: Year (YYYY for annual) or year-month (YYYYMM for monthly). Multiple values comma-separated, max 12 values.
       example: '2023'
-    freqCode:
-      name: freqCode
-      in: path
-      required: true
-      schema:
-        type: string
-        enum:
-        - A
-        - M
-      description: 'Reporting frequency: A for Annual, M for Monthly'
-      example: A
-    reporterCode:
-      name: reporterCode
-      in: query
-      required: false
-      schema:
-        type: string
-      description: UN M49 numeric country code for the reporting country. Comma-separated for multiple. E.g. 156 for China, 840 for USA.
-      example: '840'
   responses:
     UnauthorizedError:
       description: Missing or invalid API subscription key
