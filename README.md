@@ -64,70 +64,144 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-United Nations international trade statistics database with a REST API for accessing import/export data, commodity trade flows, and bilateral trade statistics.
+United Nations international trade statistics database with a REST API for accessing import/export data, commodity trade flows, and bilateral trade statistics. Covers over 200 reporting countries and territories with data spanning goods and services trade classified by HS, SITC, and other commodity codes.
 
-## Overview
+**Areas:** Trade · International Trade · Import · Export · Statistics · United Nations · Economics · Commodities · Bilateral Trade · HS Codes · SITC
 
-UN Comtrade is the world's most comprehensive trade data repository, maintained by the United Nations Statistics Division. It covers international merchandise and services trade statistics for over 200 reporting countries and territories, with data going back to 1962 for many reporters. Commodity data is classified using HS (Harmonized System), SITC (Standard International Trade Classification), and other recognized schemes.
+## UN Comtrade on APIs.io
 
-## API Access
+Everything profiled for UN Comtrade is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/un-comtrade/](https://apis.io/providers/un-comtrade/)** — or go straight to one of the APIs or properties below.
 
-The UN Comtrade API is available at `https://comtradeapi.un.org` and is managed through the [UN Comtrade Developer Portal](https://comtradedeveloper.un.org/).
+### APIs (6)
 
-### Authentication
+- [UN Comtrade Bulk Download API](https://apis.io/apis/un-comtrade/un-comtrade-bulk-download-api/) — Premium endpoints for bulk file downloads (up to 2.5M records via async processing).
+- [UN Comtrade Data Availability API](https://apis.io/apis/un-comtrade/un-comtrade-data-availability-api/) — Endpoints for discovering which countries/periods have submitted data.
+- [UN Comtrade Final Trade Data API](https://apis.io/apis/un-comtrade/un-comtrade-final-trade-data-api/) — Authenticated endpoints for full final trade data extraction (up to 250,000 records per call).
+- [UN Comtrade Public Preview API](https://apis.io/apis/un-comtrade/un-comtrade-public-preview-api/) — Public endpoints requiring no authentication — limited to 500 records.
+- [UN Comtrade Reference Data API](https://apis.io/apis/un-comtrade/un-comtrade-reference-data-api/) — Public reference data including country groups.
+- [UN Comtrade Tariffline Data API](https://apis.io/apis/un-comtrade/un-comtrade-tariffline-data-api/) — Tariffline-level trade data with 6-digit or national commodity code detail.
 
-- **No key required:** Public preview endpoints, limited to 500 records per call
-- **Free API key:** Register at [comtradeplus.un.org](https://comtradeplus.un.org/), then subscribe to the free product on the Developer Portal. Provides 500 calls/day with up to 100,000 records per call.
-- **Premium key:** Annual subscription starting at $2,000/year for individuals. Unlocks bulk downloads, async batch processing (up to 2.5M records), and higher call limits.
+### Published properties
 
-API keys are passed as the `Ocp-Apim-Subscription-Key` request header or as the `subscription-key` query parameter.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Key Endpoints
+#### Agentic access (1)
 
-| Endpoint | Description | Auth Required |
-|---|---|---|
-| `GET /public/v1/preview/{type}/{freq}/{cl}` | Preview trade data (500 records max) | No |
-| `GET /data/v1/get/{type}/{freq}/{cl}` | Extract final trade data | Yes |
-| `GET /data/v1/getTariffline/{type}/{freq}/{cl}` | Extract tariffline data | Yes |
-| `GET /data/v1/getDa/{type}/{freq}/{cl}` | Data availability | Yes |
-| `GET /data/v1/getMetadata` | Reference metadata | Yes |
-| `GET /data/v1/getLiveUpdate` | Recent publications | Yes |
-| `GET /bulk/v1/get/{type}/{freq}/{cl}` | Bulk file links | Premium |
-| `GET /bulk/v1/getTariffline/{type}/{freq}/{cl}` | Bulk tariffline files | Premium |
-| `GET /bulk/v1/getClassic/{type}/{freq}/{cl}` | Classic format bulk files | Premium |
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Path Parameters
+- [Un Comtrade Agentic Access](https://apis.io/agentic-access/un-comtrade/un-comtrade-agentic-access/)
 
-- `{type}`: `C` (Goods) or `S` (Services)
-- `{freq}`: `A` (Annual) or `M` (Monthly)
-- `{cl}`: Classification code — `HS`, `H5`, `H4`, `H3`, `S3`, `S2`, `S1`
+#### JSON Schema (2)
 
-## Subscription Plans
+The data models the API reads and writes.
 
-| Plan | Annual Cost | Calls/Day | Records/Call |
-|---|---|---|---|
-| Free Preview | $0 | Unlimited | 500 |
-| Free Registered | $0 | 500 | 100,000 |
-| Premium Individual | $2,000 | 5,000 | 250,000 |
-| Premium Institutional Pro 1 (non-profit/academic) | $6,000 | Unlimited | 250,000 |
-| Premium Institutional Pro 2 (private sector) | $12,000 | Unlimited | 250,000 |
+- [UN Comtrade API Response Envelope](https://apis.io/schemas/un-comtrade/api-response/)
+- [UN Comtrade Trade Record](https://apis.io/schemas/un-comtrade/trade-record/)
 
-Trial subscriptions are available. Contact [subscriptions@un.org](mailto:subscriptions@un.org).
+#### Examples (3)
 
-## SDKs and Libraries
+Example requests and responses.
 
-- **Python:** [comtradeapicall](https://github.com/uncomtrade/comtradeapicall) — `pip install comtradeapicall`
-- **R:** [comtradr](https://docs.ropensci.org/comtradr/) — available on CRAN
+- [Check Data Availability](https://apis.io/examples/un-comtrade/check-data-availability/)
+- [Get Bilateral Trade](https://apis.io/examples/un-comtrade/get-bilateral-trade/)
+- [Preview Goods Exports](https://apis.io/examples/un-comtrade/preview-goods-exports/)
 
-## Resources
+#### Collections (5)
 
-- [Developer Portal](https://comtradedeveloper.un.org/)
-- [Documentation](https://uncomtrade.org/docs/)
-- [Data Platform](https://comtradeplus.un.org/)
-- [Subscription Pricing](https://shop.un.org/databases)
-- [API Key Guide](https://uncomtrade.org/docs/api-subscription-keys/)
+Postman and Open Collection request collections.
 
-## Contact
+- [UN Comtrade Data Bulk Download API](https://apis.io/collections/un-comtrade/open-un-comtrade-bulk-download-api/)
+- [UN Comtrade Data Bulk Download Data Availability API](https://apis.io/collections/un-comtrade/open-un-comtrade-data-availability-api/)
+- [UN Comtrade Data Bulk Download Final Trade Data API](https://apis.io/collections/un-comtrade/open-un-comtrade-final-trade-data-api/)
+- [UN Comtrade Data Bulk Download Reference Data API](https://apis.io/collections/un-comtrade/open-un-comtrade-reference-data-api/)
+- [UN Comtrade Data Bulk Download Tariffline Data API](https://apis.io/collections/un-comtrade/open-un-comtrade-tariffline-data-api/)
 
-- General support: [comtrade@un.org](mailto:comtrade@un.org)
-- Subscriptions: [subscriptions@un.org](mailto:subscriptions@un.org)
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [UN Comtrade — jsonschema rules](https://apis.io/rules/un-comtrade/un-comtrade-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Un Comtrade Authentication](https://apis.io/security/un-comtrade/un-comtrade-authentication/)
+- [Un Comtrade Domain Security](https://apis.io/security/un-comtrade/un-comtrade-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Plans](https://apis.io/plans/un-comtrade/plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Rate Limits](https://apis.io/rate-limits/un-comtrade/rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Finops](https://apis.io/finops/un-comtrade/finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://un.org)
+
+## API Evangelist rating
+
+**Kin Score 30.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 60.7 |
+| Contract quality | 49.4 |
+| Contract governance | 9.8 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 31.6 |
+
+**Agent readiness 22.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 5.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/un-comtrade/](https://apis.io/providers/un-comtrade/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for UN Comtrade: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/un-comtrade/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
